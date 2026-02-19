@@ -1,0 +1,12 @@
+{% props title, actions %}
+
+<header class="h-20 bg-white/80 backdrop-blur-md flex items-center justify-between px-10 z-10 shrink-0 border-b border-gray-100">
+    <div>
+        <h1 class="text-xl font-bold text-slate-900">{{ title }}</h1>
+    </div>
+    {% if actions is not empty %}
+        <div class="flex items-center gap-4">
+            {{ actions|raw }}
+        </div>
+    {% endif %}
+</header>

@@ -2,11 +2,11 @@
 
 namespace AppoloDev\SFUIToolboxBundle;
 
-use AppoloDev\SFToolboxBundle\DependencyInjection\SFUIToolboxExtension;
+use AppoloDev\SFUIToolboxBundle\DependencyInjection\SFUIToolboxExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-class SFToolboxBundle extends AbstractBundle
+class SFUIToolboxBundle extends AbstractBundle
 {
     public function getContainerExtension(): ?ExtensionInterface
     {

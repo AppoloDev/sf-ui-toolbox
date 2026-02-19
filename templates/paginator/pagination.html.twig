@@ -1,0 +1,33 @@
+{% if pageCount > 1 %}
+    <div class="inline-flex gap-x-2 justify-end">
+        {% if previous is defined %}
+            <twig:SFUIToolbox:Generic:Button
+                link="{{ path(route, query|merge({(pageParameterName): previous})) }}"
+                class="py-2 border border-slate-200 bg-white hover:bg-slate-50 text-title"
+            >
+                {{ 'previous'|trans }}
+            </twig:SFUIToolbox:Generic:Button>
+        {% else %}
+            <twig:SFUIToolbox:Generic:Button
+                class="py-2 border border-slate-200 bg-slate-50 hover:bg-slate-50 text-title !cursor-not-allowed"
+            >
+                {{ 'previous'|trans }}
+            </twig:SFUIToolbox:Generic:Button>
+        {% endif %}
+
+        {% if next is defined %}
+            <twig:SFUIToolbox:Generic:Button
+                link="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                class="py-2 border border-slate-200 bg-white hover:bg-slate-50 text-title"
+            >
+                {{ 'next'|trans }}
+            </twig:SFUIToolbox:Generic:Button>
+        {% else %}
+            <twig:SFUIToolbox:Generic:Button
+                class="py-2 border border-slate-200 bg-slate-50 hover:bg-slate-50 text-title !cursor-not-allowed"
+            >
+                {{ 'next'|trans }}
+            </twig:SFUIToolbox:Generic:Button>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,6 +1,6 @@
 {
     "name": "appolodev/sf-ui-toolbox",
-    "version": "0.0.1",
+    "version": "0.0.20",
     "description": "Toolbox UI for Symfony",
     "type": "library",
     "license": "MIT",

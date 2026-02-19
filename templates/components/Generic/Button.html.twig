@@ -1,0 +1,15 @@
+{% props allowDisplay = true, color = 'appolo', link = null, icon = null, iconPlacement = 'left', target = '_self', type="button", class = '' %}
+
+ {% if allowDisplay is same as(true) %}
+     <{% if link is not null %}a{% else %}button{% endif %}
+         {% if link is null %}
+             type="{{ type }}"
+         {% else %}
+             href="{{ link }}"
+         {% endif %}
+         target="{{ target }}"
+         class="flex items-center gap-2 bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer {{ class }}"
+     >
+         {% block content %}{% endblock %}
+     </{% if link is not null %}a{% else %}button{% endif %}>
+ {% endif %}
