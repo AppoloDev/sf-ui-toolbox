@@ -1,0 +1,125 @@
+<div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+    {% block header %}
+        <div class="px-6 py-4 flex justify-between items-center border-b border-gray-100">
+            <div>
+                {% block header_title %}
+                    {% if headerTitle is not null and headerTitle is not empty %}
+                        <h2 class="text-xl font-semibold text-title">
+                            {{ headerTitle|raw }}
+                        </h2>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class="flex items-center gap-3">
+                {% block header_actions %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block search %}
+        <form>
+            <div class="px-6 py-4 flex justify-between items-center gap-4 border-b border-gray-100">
+                {% block search_bar %}
+                    <div class="flex gap-3">
+                        {% block search_input %}
+                            <div class="relative">
+                                <input type="text"
+                                       value="{{ app.request.query.get('q') }}"
+                                       name="q"
+                                       class="h-full py-2 px-3 pl-10 border border-gray-200 rounded-xl text-sm focus:outline-hidden w-full md:w-64"
+                                       placeholder="{{ 'your_search'|trans }}"/>
+                                <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
+                                    <twig:ux:icon name="iconoir:search" class="h-4 w-4 text-subtitle"/>
+                                </div>
+                            </div>
+                        {% endblock %}
+                        {% block search_extraFields %}{% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block search_actions %}
+                    <div class="flex items-center gap-2">
+                        {% set routeParams = {'_reset': true} %}
+                        {% if app.request.attributes.get('_route_params') is not empty %}
+                            {% set routeParams = routeParams|merge(app.request.attributes.get('_route_params')) %}
+                        {% endif %}
+                        <twig:SFUIToolbox:Generic:Button
+                            link="{{ path(app.request.attributes.get('_route'), routeParams) }}"
+                            class="bg-transparent text-current hover:bg-muted"
+                        >{{ 'reset'|trans }}</twig:SFUIToolbox:Generic:Button>
+                        <twig:SFUIToolbox:Generic:Button type="submit">
+                            {{ 'search'|trans }}
+                        </twig:SFUIToolbox:Generic:Button>
+                    </div>
+                {% endblock %}
+            </div>
+        </form>
+    {% endblock %}
+
+    {% block table %}
+        {% if pagination is not null and pagination is not empty %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-100">
+                    {% block table_header %}
+                        {% if tableColumns is defined %}
+                            <thead class="bg-gray-50/50">
+                            <tr>
+                                {% for column in tableColumns %}
+                                    {% if loop.first %}
+                                        {% set textPosition = 'text-left' %}
+                                    {% elseif loop.last %}
+                                        {% set textPosition = 'text-right' %}
+                                    {% else %}
+                                        {% set textPosition = 'text-center' %}
+                                    {% endif %}
+                                    <th scope="col" class="px-6 py-3 {{ textPosition }} whitespace-nowrap">
+                                        {% if 'sortable' in column or 'asc' in column or 'desc' in column %}
+                                            {{ column|raw }}
+                                        {% else %}
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-subtitle">{{ column|raw }}</span>
+                                        {% endif %}
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block table_items %}
+                        <tbody class="divide-y divide-gray-100">
+                        {% for item in pagination %}
+                            {% block table_item %}{% endblock %}
+                        {% endfor %}
+                        </tbody>
+                    {% endblock %}
+                </table>
+            </div>
+        {% else %}
+            {% if app.request.query.has('q') %}
+                {% block emptyListOnSearch %}
+                    <twig:ListEmpty
+                        description="{{ 'we_didnt_find_anything_for_your_search'|trans }}: {{ app.request.query.get('q') }}"
+                    />
+                {% endblock %}
+            {% else %}
+                {% block emptyList %}{% endblock %}
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+
+    {% block footer %}
+        {% if pagination is not null and pagination is not empty %}
+            <div class="px-6 py-4 flex justify-between items-center border-t border-gray-100">
+                <p class="text-sm text-subtitle">
+                    <span class="font-semibold text-title">{{ pagination.totalItemCount }}</span>
+                    résultat{{ pagination.totalItemCount > 1 ? 's' : '' }}
+                </p>
+                <div>
+                    {% if pagination.pageCount > 1 %}
+                        {{ knp_pagination_render(pagination) }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock %}
+</div>

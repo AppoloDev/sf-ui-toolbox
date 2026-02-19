@@ -1,0 +1,13 @@
+{% props allowDisplay = true, swalTitle = 'Êtes-vous sûr ?', swalText = '', swalColor = 'red' %}
+
+{% if allowDisplay is same as(true) %}
+    <sweet-alert
+        title="{{ swalTitle }}"
+        text="{{ swalText }}"
+        color="{{ swalColor }}"
+        cancelButtonText="{{ 'cancel'|trans }}"
+        confirmButtonText="{{ 'i_confirm'|trans }}"
+    >
+        {% block content %}{% endblock %}
+    </sweet-alert>
+{% endif %}
