@@ -41,10 +41,8 @@
         {% set headerActions = block('mainHeaderActions') is defined ? block('mainHeaderActions') : '' %}
         <twig:SFUIToolbox:Layout:MainHeader title="{{ block('title') }}" actions="{{ headerActions }}" />
 
-        <div class="flex-1 overflow-auto bg-muted/30 p-6 lg:p-10">
-            <div class="max-w-7xl mx-auto space-y-8">
-                {% block body %}{% endblock %}
-            </div>
+        <div class="flex-1 overflow-auto bg-muted/30 p-6 lg:p-10 space-y-8">
+            {% block body %}{% endblock %}
         </div>
     </main>
 
