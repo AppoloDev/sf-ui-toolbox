@@ -1,0 +1,11 @@
+{% props title = '', description = '', buttonLabel = '', buttonLink = '#' %}
+<div class="px-4 pb-4">
+    <div class="bg-primary rounded-2xl p-5 text-primary-foreground">
+        <h4 class="font-bold mb-2 text-sm">{{ title }}</h4>
+        <p class="text-xs opacity-75 mb-4 leading-relaxed">{{ description }}</p>
+        <a href="{{ buttonLink }}"
+           class="block w-full bg-white text-primary text-center py-2 px-4 rounded-lg font-semibold text-sm hover:bg-slate-50 transition-colors">
+            {{ buttonLabel }}
+        </a>
+    </div>
+</div>
