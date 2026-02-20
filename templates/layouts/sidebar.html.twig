@@ -34,7 +34,7 @@
 
 {% for type, messages in app.flashes %}
     {% for message in messages %}
-        <twig:Toast message="{{ message }}" type="{{ type }}"/>
+        <twig:SFUIToolbox:Generic:Toast message="{{ message }}" type="{{ type }}"/>
     {% endfor %}
 {% endfor %}
 
