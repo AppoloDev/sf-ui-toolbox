@@ -1,13 +1,44 @@
-{% props allowDisplay = true, swalTitle = 'Êtes-vous sûr ?', swalText = '', swalColor = 'red' %}
-
+{# @prop allowDisplay boolean Show the component, default to true #}
+{# @prop swalTitle Dialog title #}
+{# @prop swalText Dialog body text #}
+{# @prop confirmLink URL to navigate to on confirmation #}
+{# @prop confirmLabel Override label for confirm button #}
+{# @block content The trigger element #}
+{%- props allowDisplay = true, swalTitle = 'Êtes-vous sûr ?', swalText = '', confirmLink = null, confirmLabel = null -%}
 {% if allowDisplay is same as(true) %}
-    <sweet-alert
-        title="{{ swalTitle }}"
-        text="{{ swalText }}"
-        color="{{ swalColor }}"
-        cancelButtonText="{{ 'cancel'|trans }}"
-        confirmButtonText="{{ 'i_confirm'|trans }}"
+    {%- set _sa_id = 'sweetalert-' ~ random() -%}
+    <div
+        data-controller="dialog"
+        aria-labelledby="{{ _sa_id }}-title"
+        aria-describedby="{{ _sa_id }}-description"
     >
-        {% block content %}{% endblock %}
-    </sweet-alert>
+        <span data-action="click->dialog#open" data-dialog-target="trigger" aria-haspopup="dialog">
+            {%- block content %}{% endblock -%}
+        </span>
+        <dialog
+            id="{{ _sa_id }}"
+            class="bg-background fixed top-[50%] left-[50%] z-50 max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] scale-95 gap-4 rounded-lg border p-6 opacity-0 shadow-lg transition-all transition-discrete duration-200 backdrop:transition-discrete backdrop:duration-150 open:grid open:scale-100 open:opacity-100 open:backdrop:bg-black/50 sm:max-w-lg starting:open:scale-95 starting:open:opacity-0"
+            data-dialog-target="dialog"
+            data-action="keydown.esc->dialog#close:prevent click->dialog#closeOnClickOutside"
+        >
+            <header class="flex flex-col gap-2 text-center sm:text-left">
+                <h2 id="{{ _sa_id }}-title" class="text-lg leading-none font-semibold">{{ swalTitle }}</h2>
+                {% if swalText %}
+                    <p id="{{ _sa_id }}-description" class="text-muted-foreground text-sm">{{ swalText }}</p>
+                {% endif %}
+            </header>
+            <footer class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <button
+                    type="button"
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                    data-action="click->dialog#close"
+                >{{ 'cancel'|trans }}</button>
+                {% if confirmLink %}
+                    <twig:SFUIToolbox:Generic:Button variant="destructive" link="{{ confirmLink }}">
+                        {{- confirmLabel ?? 'i_confirm'|trans -}}
+                    </twig:SFUIToolbox:Generic:Button>
+                {% endif %}
+            </footer>
+        </dialog>
+    </div>
 {% endif %}

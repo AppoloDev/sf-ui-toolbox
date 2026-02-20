@@ -1,10 +1,17 @@
-{% props label, bgColor = 'bg-black', textColor = 'text-white' %}
-
-<div class="hs-tooltip">
-    {% block content %}{% endblock %}
+{# @prop label The tooltip text #}
+{# @prop position 'top'|'bottom'|'left'|'right' Tooltip placement, default to 'top' #}
+{# @block content The trigger element #}
+{%- props label, position = 'top' -%}
+{%- set positionClasses = {
+    top: 'bottom-full left-1/2 -translate-x-1/2 mb-1.5',
+    bottom: 'top-full left-1/2 -translate-x-1/2 mt-1.5',
+    left: 'right-full top-1/2 -translate-y-1/2 mr-1.5',
+    right: 'left-full top-1/2 -translate-y-1/2 ml-1.5',
+} -%}
+<div class="relative group/tooltip inline-flex {{ attributes.render('class') }}" {{ attributes.without('class') }}>
+    {%- block content %}{% endblock -%}
     <span
-        class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 {{ bgColor }} text-xs font-medium {{ textColor }} rounded-md shadow-2xs"
-        role="tooltip">
-      {{ label }}
-    </span>
+        role="tooltip"
+        class="pointer-events-none absolute z-50 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs text-background opacity-0 transition-opacity group-hover/tooltip:opacity-100 {{ positionClasses[position] ?? positionClasses.top }}"
+    >{{ label }}</span>
 </div>

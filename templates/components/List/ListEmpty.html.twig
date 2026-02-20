@@ -1,19 +1,31 @@
-<div class="max-w-sm w-full flex flex-col justify-center mx-auto gap-5 p-8">
-    <div class="flex flex-col items-center gap-2">
-        <div class="mb-4">
-            {% block ListEmptyIllustration %}
-                {{ source('@SFUIToolbox/illustrations/list_empty.svg') }}
-            {% endblock %}
-        </div>
-
-        {% if title is not null and title is not empty %}
-            <div class="font-semibold text-gray-800 text-center">{{ title }}</div>
-        {% endif %}
-
-        {% if description is not null and description is not empty %}
-            <p class="text-sm text-gray-600 text-center">{{ description }}</p>
-        {% endif %}
-    </div>
-
-    {% block ListEmptyButton %}{% endblock %}
-</div>
+{# @prop title Empty state title #}
+{# @prop description Empty state description #}
+{# @block ListEmptyIllustration Override the illustration #}
+{# @block ListEmptyButton Slot for action button #}
+{%- props title = 'Aucun résultat.', description = "Essayez d'ajouter un nouvel élément." -%}
+<twig:SFUIToolbox:Generic:Empty>
+    <twig:block name="content">
+        <twig:SFUIToolbox:Generic:Empty:Media>
+            <twig:block name="content">
+                {%- block ListEmptyIllustration -%}
+                    {{ source('@SFUIToolbox/illustrations/list_empty.svg') }}
+                {%- endblock -%}
+            </twig:block>
+        </twig:SFUIToolbox:Generic:Empty:Media>
+        <twig:SFUIToolbox:Generic:Empty:Content>
+            <twig:block name="content">
+                <twig:SFUIToolbox:Generic:Empty:Header>
+                    <twig:block name="content">
+                        {% if title is not empty %}
+                            <twig:SFUIToolbox:Generic:Empty:Title>{{ title }}</twig:SFUIToolbox:Generic:Empty:Title>
+                        {% endif %}
+                        {% if description is not empty %}
+                            <twig:SFUIToolbox:Generic:Empty:Description>{{ description }}</twig:SFUIToolbox:Generic:Empty:Description>
+                        {% endif %}
+                    </twig:block>
+                </twig:SFUIToolbox:Generic:Empty:Header>
+                {%- block ListEmptyButton %}{% endblock -%}
+            </twig:block>
+        </twig:SFUIToolbox:Generic:Empty:Content>
+    </twig:block>
+</twig:SFUIToolbox:Generic:Empty>
