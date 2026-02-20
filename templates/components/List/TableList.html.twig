@@ -1,10 +1,10 @@
-<div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+<div class="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
     {% block header %}
-        <div class="px-6 py-4 flex justify-between items-center border-b border-gray-100">
+        <div class="px-6 py-4 flex justify-between items-center border-b border-border">
             <div>
                 {% block header_title %}
                     {% if headerTitle is not null and headerTitle is not empty %}
-                        <h2 class="text-xl font-semibold text-title">
+                        <h2 class="text-xl font-semibold text-card-foreground">
                             {{ headerTitle|raw }}
                         </h2>
                     {% endif %}
@@ -18,7 +18,7 @@
 
     {% block search %}
         <form>
-            <div class="px-6 py-4 flex justify-between items-center gap-4 border-b border-gray-100">
+            <div class="px-6 py-4 flex justify-between items-center gap-4 border-b border-border">
                 {% block search_bar %}
                     <div class="flex gap-3">
                         {% block search_input %}
@@ -26,10 +26,10 @@
                                 <input type="text"
                                        value="{{ app.request.query.get('q') }}"
                                        name="q"
-                                       class="h-full py-2 px-3 pl-10 border border-gray-200 rounded-xl text-sm focus:outline-hidden w-full md:w-64"
+                                       class="h-9 py-2 px-3 pl-10 border border-input rounded-lg text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring w-full md:w-64"
                                        placeholder="{{ 'your_search'|trans }}"/>
                                 <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
-                                    <twig:ux:icon name="iconoir:search" class="h-4 w-4 text-subtitle"/>
+                                    <twig:ux:icon name="iconoir:search" class="h-4 w-4 text-muted-foreground"/>
                                 </div>
                             </div>
                         {% endblock %}
@@ -59,10 +59,10 @@
     {% block table %}
         {% if pagination is not null and pagination is not empty %}
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-100">
+                <table class="min-w-full divide-y divide-border">
                     {% block table_header %}
                         {% if tableColumns is defined %}
-                            <thead class="bg-gray-50/50">
+                            <thead class="bg-muted/50">
                             <tr>
                                 {% for column in tableColumns %}
                                     {% if loop.first %}
@@ -76,7 +76,7 @@
                                         {% if 'sortable' in column or 'asc' in column or 'desc' in column %}
                                             {{ column|raw }}
                                         {% else %}
-                                            <span class="text-xs font-semibold uppercase tracking-wide text-subtitle">{{ column|raw }}</span>
+                                            <span class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{{ column|raw }}</span>
                                         {% endif %}
                                     </th>
                                 {% endfor %}
@@ -86,7 +86,7 @@
                     {% endblock %}
 
                     {% block table_items %}
-                        <tbody class="divide-y divide-gray-100">
+                        <tbody class="divide-y divide-border">
                         {% for item in pagination %}
                             {% block table_item %}{% endblock %}
                         {% endfor %}
@@ -109,9 +109,9 @@
 
     {% block footer %}
         {% if pagination is not null and pagination is not empty %}
-            <div class="px-6 py-4 flex justify-between items-center border-t border-gray-100">
-                <p class="text-sm text-subtitle">
-                    <span class="font-semibold text-title">{{ pagination.totalItemCount }}</span>
+            <div class="px-6 py-4 flex justify-between items-center border-t border-border">
+                <p class="text-sm text-muted-foreground">
+                    <span class="font-semibold text-foreground">{{ pagination.totalItemCount }}</span>
                     résultat{{ pagination.totalItemCount > 1 ? 's' : '' }}
                 </p>
                 <div>
