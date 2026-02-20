@@ -1,35 +1,42 @@
-{% props routePrefix, mainLinks %}
-
-<aside class="w-64 bg-sidebarGray flex flex-col shrink-0 border-r border-gray-200/50">
-    <div>
-        <a
-           href="{{ path(routePrefix ~'_dashboard') }}"
-           aria-label="{{ siteTitle }}">
-            <img src="{{ asset('assets/images/logo.png') }}" class="w-full" alt="{{ siteTitle }}"/>
+{# @prop routePrefix Route prefix for the dashboard link (e.g. 'admin', 'company') #}
+{# @prop mainLinks Array of {label, route, params, isGranted, icon} #}
+{# @prop userName Optional — user display name for the bottom card #}
+{# @prop userRole Optional — user role or company name #}
+{# @prop userInitials Optional — avatar initials, defaults to first letter of userName #}
+{%- props routePrefix, mainLinks, userName = null, userRole = null, userInitials = null -%}
+<aside
+    data-sidebar-target="panel"
+    class="-translate-x-full fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 ease-in-out lg:relative lg:inset-auto lg:z-auto lg:translate-x-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shrink-0"
+>
+    {# Logo #}
+    <div class="px-4 py-5 border-b border-sidebar-border shrink-0">
+        <a href="{{ path(routePrefix ~ '_dashboard') }}" aria-label="{{ siteTitle }}">
+            <img src="{{ asset('assets/images/logo.png') }}" class="h-8 w-auto" alt="{{ siteTitle }}"/>
         </a>
     </div>
-    <nav class="flex-1 px-4 py-4 space-y-2">
+
+    {# Navigation #}
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
         {% for link in mainLinks %}
-            {% set isActive = app.request.attributes.get('_route') == link.route %}
-            {% if is_granted(link.isGranted) %}
-                <a class="flex items-center gap-3 px-4 py-3 rounded-xl {{ isActive ? 'sidebar-item-active' : 'text-subtitle' }} hover:bg-white/50 transition-all "
-                   href="{{ path(link.route, link.params) }}">
-                    <twig:ux:icon name="{{ link.icon }}"/>
-                    <span class="{{ isActive ? 'font-semibold' : 'font-medium' }}"> {{ link.label }}</span>
+            {% if link.isGranted %}
+                {%- set isActive = app.request.attributes.get('_route') == link.route -%}
+                <a
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors {{ isActive ? 'bg-sidebar-accent text-sidebar-accent-foreground font-semibold' : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground' }}"
+                    href="{{ path(link.route, link.params ?? []) }}"
+                >
+                    <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0"/>
+                    <span>{{ link.label }}</span>
                 </a>
             {% endif %}
         {% endfor %}
     </nav>
 
-
-    {# AFAIRE: Component with dropdown #}
-    <div class="p-6 mt-auto">
-        <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-primary font-bold">F</div>
-            <div class="flex flex-col min-w-0">
-                <span class="text-sm font-semibold text-title truncate">Fred Admin</span>
-                <span class="text-xs text-subtitle">Entreprise</span>
-            </div>
-        </div>
-    </div>
+    {# User card #}
+    {% if userName is not null %}
+        <twig:SFUIToolbox:Layout:SidebarUser
+            name="{{ userName }}"
+            role="{{ userRole ?? '' }}"
+            initials="{{ userInitials ?? '' }}"
+        />
+    {% endif %}
 </aside>

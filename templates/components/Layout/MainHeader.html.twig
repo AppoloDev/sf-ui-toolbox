@@ -1,11 +1,20 @@
-{% props title, actions %}
-
-<header class="h-20 bg-white/80 backdrop-blur-md flex items-center justify-between px-10 z-10 shrink-0 border-b border-gray-100">
-    <div>
-        <h1 class="text-xl font-bold text-slate-900">{{ title }}</h1>
+{# @prop title Page title #}
+{# @prop actions Raw HTML string for header action buttons #}
+{%- props title, actions = '' -%}
+<header class="h-16 bg-background/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0 border-b border-border z-10">
+    <div class="flex items-center gap-3">
+        <button
+            type="button"
+            class="lg:hidden p-1.5 rounded-md hover:bg-accent transition-colors text-foreground"
+            data-action="click->sidebar#toggle"
+            aria-label="Toggle navigation"
+        >
+            <twig:ux:icon name="lucide:menu" class="size-5"/>
+        </button>
+        <h1 class="text-xl font-semibold text-foreground">{{ title }}</h1>
     </div>
     {% if actions is not empty %}
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
             {{ actions|raw }}
         </div>
     {% endif %}

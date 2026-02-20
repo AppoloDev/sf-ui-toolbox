@@ -1,0 +1,21 @@
+{# @prop name User display name #}
+{# @prop role User role or company name #}
+{# @prop initials Avatar initials — defaults to first letter of name #}
+{# @block content Override entire card content #}
+{%- props name = '', role = '', initials = '' -%}
+{%- set displayInitials = initials is not empty ? initials : (name is not empty ? name|first|upper : '?') -%}
+<div class="p-3 border-t border-sidebar-border shrink-0">
+    <button
+        type="button"
+        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebar-accent transition-colors text-left group"
+    >
+        <div class="size-8 rounded-full bg-sidebar-primary text-sidebar-primary-foreground flex items-center justify-center text-xs font-bold shrink-0">
+            {{ displayInitials }}
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+            <span class="text-sm font-semibold text-sidebar-foreground truncate">{{ name }}</span>
+            <span class="text-xs text-sidebar-foreground/60 truncate">{{ role }}</span>
+        </div>
+        <twig:ux:icon name="lucide:chevrons-up-down" class="size-4 text-sidebar-foreground/40 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"/>
+    </button>
+</div>
