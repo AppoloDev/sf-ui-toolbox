@@ -1,7 +1,7 @@
 {# @prop value bool The boolean value #}
-{# @prop labelTrue Label when value is true, default to 'Oui' #}
-{# @prop labelFalse Label when value is false, default to 'Non' #}
-{%- props value, labelTrue = 'Oui', labelFalse = 'Non' -%}
+{# @prop labelTrue Label when value is true, default to 'yes' #}
+{# @prop labelFalse Label when value is false, default to 'no' #}
+{%- props value, labelTrue = 'yes'|trans, labelFalse = 'no'|trans -%}
 <twig:SFUIToolbox:Generic:Badge color="{{ value ? 'green' : 'red' }}">
     {{- value ? labelTrue : labelFalse -}}
 </twig:SFUIToolbox:Generic:Badge>

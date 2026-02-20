@@ -1,18 +1,23 @@
+{# @prop items Array of {path, label} — path null for current page #}
+{# @block breadcrumbActions Slot for actions on the right side #}
+{%- props items = [] -%}
+{%- set filteredItems = items|filter(item => item is not empty) -%}
 <div class="flex items-center justify-between mb-10">
-    <ol class="flex items-center gap-2 text-sm text-subtitle flex-wrap" aria-label="Breadcrumb">
-        {% for item in items %}
-            {% if item is not empty %}
-                <li class="flex items-center gap-2">
-                    {% if not loop.last %}
-                        <a href="{{ item.path }}" class="text-subtitle hover:text-title transition-colors">{{ item.label|raw }}</a>
-                        <twig:ux:icon name="fa6-solid:chevron-right" class="h-3 w-3 text-subtitle/50" />
-                    {% else %}
-                        <span class="text-title font-medium" aria-current="page">{{ item.label|raw }}</span>
-                    {% endif %}
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ol>
-
-    {% block breadcrumbActions %}{% endblock %}
+    <nav {{ attributes }} aria-label="Breadcrumb">
+        <twig:SFUIToolbox:Generic:Breadcrumb:List>
+            {% for item in filteredItems %}
+                <twig:SFUIToolbox:Generic:Breadcrumb:Item>
+                    {%- if not loop.last -%}
+                        <twig:SFUIToolbox:Generic:Breadcrumb:Link href="{{ item.path }}">{{- item.label|raw -}}</twig:SFUIToolbox:Generic:Breadcrumb:Link>
+                    {%- else -%}
+                        <twig:SFUIToolbox:Generic:Breadcrumb:Page>{{- item.label|raw -}}</twig:SFUIToolbox:Generic:Breadcrumb:Page>
+                    {%- endif -%}
+                </twig:SFUIToolbox:Generic:Breadcrumb:Item>
+                {% if not loop.last %}
+                    <twig:SFUIToolbox:Generic:Breadcrumb:Separator />
+                {% endif %}
+            {% endfor %}
+        </twig:SFUIToolbox:Generic:Breadcrumb:List>
+    </nav>
+    {%- block breadcrumbActions %}{% endblock -%}
 </div>
