@@ -1,0 +1,25 @@
+{% set colorClasses = {
+    'green': 'bg-green-50 border-green-200 text-green-800',
+    'red': 'bg-red-50 border-red-200 text-red-800',
+    'orange': 'bg-orange-50 border-orange-200 text-orange-800',
+    'blue': 'bg-blue-50 border-blue-200 text-blue-800',
+    'indigo': 'bg-indigo-50 border-indigo-200 text-indigo-800',
+} %}
+
+<div class="rounded-xl border p-4 {{ colorClasses[color] }}" role="alert">
+    {% if header is not null and header is not empty %}
+        <div class="font-semibold text-sm mb-1">{{ header }}</div>
+    {% endif %}
+
+    {% if description is not null and description is not empty %}
+        <div class="text-sm">{{ description }}</div>
+    {% endif %}
+
+    {% if links is not null and links is not empty %}
+        <div class="flex gap-3 mt-4">
+            {% for link in links %}
+                <a href="{{ link.link }}" class="text-sm font-medium underline">{{ link.label }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

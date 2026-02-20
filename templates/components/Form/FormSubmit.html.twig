@@ -1,0 +1,26 @@
+{% if form[submitField] is defined %}
+    <div class="flex sm:justify-between gap-3 flex-wrap">
+        <div class="flex gap-2">
+            {{ form_widget(form[submitField]) }}
+
+            <twig:SFUIToolbox:Generic:Button type="reset" class="bg-transparent text-current hover:bg-muted">
+                {{ 'reset'|trans }}
+            </twig:SFUIToolbox:Generic:Button>
+        </div>
+
+        {% if deleteButtonLink is not null %}
+            <twig:SFUIToolbox:Generic:SweetAlert
+                swalTitle="{{ deleteSwalTitle }}"
+                swalText="{{ deleteSwalText }}"
+                swalColor="{{ deleteSwalColor }}"
+            >
+                <twig:block name="content">
+                    <twig:SFUIToolbox:Generic:Button
+                        link="{{ deleteButtonLink }}"
+                        class="bg-red-600 hover:bg-red-700 text-white"
+                    >{{ 'ask_delete'|trans }}</twig:SFUIToolbox:Generic:Button>
+                </twig:block>
+            </twig:SFUIToolbox:Generic:SweetAlert>
+        {% endif %}
+    </div>
+{% endif %}

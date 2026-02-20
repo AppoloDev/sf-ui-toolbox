@@ -1,0 +1,16 @@
+{% set color = type == 'success' ? 'green' : (type in ['danger', 'error'] ? 'red' : 'orange') %}
+
+{% set colorClasses = {
+    'green': 'bg-green-50 border-green-200 text-green-800',
+    'red': 'bg-red-50 border-red-200 text-red-800',
+    'orange': 'bg-orange-50 border-orange-200 text-orange-800',
+} %}
+
+<dismiss-toast id="dismiss-toast">
+    <div class="rounded-xl border p-4 flex items-center justify-between gap-3 shadow-sm {{ colorClasses[color] }}" role="alert">
+        <span class="text-sm font-medium">{{ message }}</span>
+        <button type="button" data-hs-remove-element="#dismiss-toast" class="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+            <twig:ux:icon name="ph:x" class="h-4 w-4" />
+        </button>
+    </div>
+</dismiss-toast>

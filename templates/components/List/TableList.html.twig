@@ -97,7 +97,7 @@
         {% else %}
             {% if app.request.query.has('q') %}
                 {% block emptyListOnSearch %}
-                    <twig:ListEmpty
+                    <twig:SFUIToolbox:List:ListEmpty
                         description="{{ 'we_didnt_find_anything_for_your_search'|trans }}: {{ app.request.query.get('q') }}"
                     />
                 {% endblock %}
