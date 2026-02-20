@@ -9,12 +9,9 @@
     class="-translate-x-full fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 ease-in-out lg:relative lg:inset-auto lg:z-auto lg:translate-x-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shrink-0"
 >
     {# Logo — h-16 matches MainHeader height #}
-    <div class="h-16 flex items-center px-6 border-b border-sidebar-border shrink-0">
-        <a href="{{ path(routePrefix ~ '_dashboard') }}" class="flex items-center gap-3" aria-label="{{ siteTitle }}">
-            <div class="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <twig:ux:icon name="lucide:layers" class="size-5 text-primary-foreground"/>
-            </div>
-            <span class="text-xl font-bold tracking-tight text-sidebar-foreground">{{ siteTitle }}</span>
+    <div class="h-16 flex items-center px-6 shrink-0">
+        <a href="{{ path(routePrefix ~ '_dashboard') }}" aria-label="{{ siteTitle }}">
+            <img src="{{ asset('assets/images/logo.svg') }}" alt="{{ siteTitle }}" class="h-10 dark:brightness-0 dark:invert"/>
         </a>
     </div>
 

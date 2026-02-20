@@ -31,8 +31,8 @@
 <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
     <div class="mb-8">
         {% block logo %}
-            <a href="/">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="{{ siteTitle }}" class="h-16"/>
+            <a href="{{ path('home') }}">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="{{ siteTitle }}" class="h-16 dark:brightness-0 dark:invert"/>
             </a>
         {% endblock %}
     </div>
