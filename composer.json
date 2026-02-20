@@ -16,6 +16,8 @@
         "ext-zip": "*",
         "php": ">=8.2",
         "twig/twig": "^3.0",
+        "twig/html-extra": "^3.12",
+        "tales-from-a-dev/twig-tailwind-extra": "^1.0",
         "symfony/ux-twig-component": "^2.9",
         "symfony/twig-bundle": "^8.0",
         "symfony/ux-icons": "^2.18"

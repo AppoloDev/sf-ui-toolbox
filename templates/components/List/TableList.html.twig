@@ -44,8 +44,8 @@
                             {% set routeParams = routeParams|merge(app.request.attributes.get('_route_params')) %}
                         {% endif %}
                         <twig:SFUIToolbox:Generic:Button
+                            variant="ghost"
                             link="{{ path(app.request.attributes.get('_route'), routeParams) }}"
-                            class="bg-transparent text-current hover:bg-muted"
                         >{{ 'reset'|trans }}</twig:SFUIToolbox:Generic:Button>
                         <twig:SFUIToolbox:Generic:Button type="submit">
                             {{ 'search'|trans }}
