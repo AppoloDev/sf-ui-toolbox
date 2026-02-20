@@ -8,10 +8,10 @@
     data-sidebar-target="panel"
     class="-translate-x-full fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 ease-in-out lg:relative lg:inset-auto lg:z-auto lg:translate-x-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shrink-0"
 >
-    {# Logo #}
-    <div class="px-4 py-5 border-b border-sidebar-border shrink-0">
+    {# Logo — h-16 matches MainHeader height #}
+    <div class="h-16 flex items-center px-6 border-b border-sidebar-border shrink-0">
         <a href="{{ path(routePrefix ~ '_dashboard') }}" aria-label="{{ siteTitle }}">
-            <img src="{{ asset('assets/images/logo.png') }}" class="h-8 w-auto" alt="{{ siteTitle }}"/>
+            <img src="{{ asset('assets/images/logo.png') }}" class="max-h-9 w-auto" alt="{{ siteTitle }}"/>
         </a>
     </div>
 
