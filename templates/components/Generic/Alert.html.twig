@@ -1,25 +1,47 @@
-{% set colorClasses = {
-    'green': 'bg-green-50 border-green-200 text-green-800',
-    'red': 'bg-red-50 border-red-200 text-red-800',
-    'orange': 'bg-orange-50 border-orange-200 text-orange-800',
-    'blue': 'bg-blue-50 border-blue-200 text-blue-800',
-    'indigo': 'bg-indigo-50 border-indigo-200 text-indigo-800',
-} %}
-
-<div class="rounded-xl border p-4 {{ colorClasses[color] }}" role="alert">
-    {% if header is not null and header is not empty %}
-        <div class="font-semibold text-sm mb-1">{{ header }}</div>
+{# @prop variant 'default'|'destructive'|'green'|'orange'|'blue'|'indigo' The variant, default to `default` #}
+{# @prop color 'green'|'red'|'orange'|'blue'|'indigo' Shorthand mapped to variant #}
+{# @prop header Optional title string #}
+{# @prop description Optional description string #}
+{# @prop links Optional array of {label, link} #}
+{# @block content Slot for custom content (Alert:Title, Alert:Description, icons…) #}
+{%- set colorToVariant = {
+    'green': 'green',
+    'red': 'destructive',
+    'orange': 'orange',
+    'blue': 'blue',
+    'indigo': 'indigo',
+} -%}
+{%- set resolvedVariant = color is defined and color is not null ? (colorToVariant[color] ?? 'default') : variant -%}
+{%- set style = html_cva(
+    base: 'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+    variants: {
+        variant: {
+            default: 'bg-background text-foreground',
+            destructive: 'border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive',
+            green: 'border-green-200 bg-green-50 text-green-800 dark:border-green-800 dark:bg-green-950 dark:text-green-300',
+            orange: 'border-orange-200 bg-orange-50 text-orange-800 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300',
+            blue: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300',
+            indigo: 'border-indigo-200 bg-indigo-50 text-indigo-800 dark:border-indigo-800 dark:bg-indigo-950 dark:text-indigo-300',
+        },
+    },
+) -%}
+<div
+    class="{{ style.apply({variant: resolvedVariant}, attributes.render('class'))|tailwind_merge }}"
+    role="alert"
+    {{ attributes }}
+>
+    {% if header is defined and header is not null and header is not empty %}
+        <twig:SFUIToolbox:Generic:Alert:Title>{{ header }}</twig:SFUIToolbox:Generic:Alert:Title>
     {% endif %}
-
-    {% if description is not null and description is not empty %}
-        <div class="text-sm">{{ description }}</div>
+    {% if description is defined and description is not null and description is not empty %}
+        <twig:SFUIToolbox:Generic:Alert:Description>{{ description }}</twig:SFUIToolbox:Generic:Alert:Description>
     {% endif %}
-
-    {% if links is not null and links is not empty %}
-        <div class="flex gap-3 mt-4">
+    {% if links is defined and links is not null and links is not empty %}
+        <div class="flex gap-3 mt-3">
             {% for link in links %}
-                <a href="{{ link.link }}" class="text-sm font-medium underline">{{ link.label }}</a>
+                <a href="{{ link.link }}" class="text-sm font-medium underline underline-offset-4">{{ link.label }}</a>
             {% endfor %}
         </div>
     {% endif %}
+    {%- block content %}{% endblock -%}
 </div>
