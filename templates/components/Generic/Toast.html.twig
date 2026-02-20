@@ -12,11 +12,14 @@
         },
     },
 ) -%}
-<dismiss-toast id="dismiss-toast">
-    <div class="{{ style.apply({type: type}, attributes.render('class'))|tailwind_merge }}" role="alert" {{ attributes }}>
-        <span class="text-sm font-medium">{{ message }}</span>
-        <button type="button" data-hs-remove-element="#dismiss-toast" class="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
-            <twig:ux:icon name="ph:x" class="h-4 w-4" />
-        </button>
-    </div>
-</dismiss-toast>
+<div
+    data-controller="dismiss"
+    class="{{ style.apply({type: type}, attributes.render('class'))|tailwind_merge }}"
+    role="alert"
+    {{ attributes }}
+>
+    <span class="text-sm font-medium">{{ message }}</span>
+    <button type="button" data-action="click->dismiss#dismiss" class="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+        <twig:ux:icon name="ph:x" class="h-4 w-4"/>
+    </button>
+</div>

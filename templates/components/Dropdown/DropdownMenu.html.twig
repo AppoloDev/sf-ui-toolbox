@@ -1,15 +1,27 @@
-<div class="hs-dropdown relative inline-flex">
+<div
+    class="relative inline-flex"
+    data-controller="dropdown"
+    data-action="click@window->dropdown#closeOnClickOutside"
+>
     {% block dropdownButton %}
-        <button type="button" class="hs-dropdown-toggle flex items-center justify-center w-9 h-9 rounded-xl border border-gray-100 bg-white text-subtitle hover:bg-gray-50 transition-all">
-            <twig:ux:icon name="fa6-solid:ellipsis" class="w-4 h-4"/>
+        <button
+            type="button"
+            class="flex items-center justify-center size-9 rounded-lg border border-border bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+            data-action="click->dropdown#toggle"
+        >
+            <twig:ux:icon name="fa6-solid:ellipsis" class="size-4"/>
         </button>
     {% endblock %}
 
-    <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-40 bg-white border border-gray-100 shadow-lg rounded-xl p-1 mt-2 z-10"
-         role="menu" aria-orientation="vertical">
+    <div
+        data-dropdown-target="menu"
+        class="hidden absolute right-0 top-full mt-1 min-w-40 z-10 rounded-lg border border-border bg-popover text-popover-foreground shadow-md p-1"
+        role="menu"
+        aria-orientation="vertical"
+    >
         {% if dropdownHeaderLabel is defined %}
             <div class="px-3 py-2">
-                <span class="block text-xs font-semibold uppercase tracking-wide text-subtitle">
+                <span class="block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {% block dropdownHeaderLabel %}{% endblock %}
                 </span>
             </div>
