@@ -1,13 +1,18 @@
 {# @prop name User display name #}
 {# @prop role User role or company name #}
 {# @prop initials Avatar initials — defaults to first letter of name #}
-{# @block content Override entire card content #}
-{%- props name = '', role = '', initials = '' -%}
+{# @prop routePrefix Route prefix for account link (e.g. 'admin', 'company') #}
+{%- props name = '', role = '', initials = '', routePrefix = '' -%}
 {%- set displayInitials = initials is not empty ? initials : (name is not empty ? name|first|upper : '?') -%}
-<div class="p-3 border-t border-sidebar-border shrink-0">
+<div
+    class="p-3 border-t border-sidebar-border shrink-0 relative"
+    data-controller="dropdown"
+    data-action="click@window->dropdown#closeOnClickOutside"
+>
     <button
         type="button"
         class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-sidebar-accent transition-colors text-left group"
+        data-action="click->dropdown#toggle"
     >
         <div class="size-8 rounded-full bg-sidebar-primary text-sidebar-primary-foreground flex items-center justify-center text-xs font-bold shrink-0">
             {{ displayInitials }}
@@ -18,4 +23,30 @@
         </div>
         <twig:ux:icon name="lucide:chevrons-up-down" class="size-4 text-sidebar-foreground/40 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"/>
     </button>
+
+    <div
+        data-dropdown-target="menu"
+        class="hidden absolute bottom-full left-3 right-3 mb-1 z-10 rounded-lg border border-sidebar-border bg-popover text-popover-foreground shadow-md p-1"
+        role="menu"
+        aria-orientation="vertical"
+    >
+        {% if routePrefix is not empty %}
+            <a
+                href="{{ path(routePrefix ~ '_account_edit') }}"
+                class="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                role="menuitem"
+            >
+                <twig:ux:icon name="lucide:user" class="size-4 shrink-0"/>
+                {{ 'my_profile'|trans }}
+            </a>
+        {% endif %}
+        <a
+            href="{{ path('auth_logout') }}"
+            class="flex items-center gap-2 px-3 py-2 text-sm rounded-md text-destructive/80 hover:bg-destructive/10 hover:text-destructive transition-colors"
+            role="menuitem"
+        >
+            <twig:ux:icon name="lucide:log-out" class="size-4 shrink-0"/>
+            {{ 'logout'|trans }}
+        </a>
+    </div>
 </div>
