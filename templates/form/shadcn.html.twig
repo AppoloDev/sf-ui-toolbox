@@ -125,6 +125,26 @@
     </div>
 {%- endblock checkbox_row -%}
 
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {%- set label = label_format|replace({'%name%': name, '%id%': id}) -%}
+        {%- elseif label is not same as(false) -%}
+            {%- set label = name|humanize -%}
+        {%- endif -%}
+    {%- endif -%}
+    {%- set _cls = 'inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50' -%}
+    {%- set attr = attr|merge({class: (_cls ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        {{- label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+    </button>
+{%- endblock button_widget -%}
+
+{%- block submit_widget -%}
+    {%- set type = 'submit' -%}
+    {{- block('button_widget') -}}
+{%- endblock submit_widget -%}
+
 {%- block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
