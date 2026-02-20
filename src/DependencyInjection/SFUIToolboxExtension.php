@@ -29,6 +29,9 @@ class SFUIToolboxExtension extends Extension implements PrependExtensionInterfac
                 'paths' => [
                     __DIR__.'/../../templates' => 'SFUIToolbox',
                 ],
+                'form_themes' => [
+                    '@SFUIToolbox/form/shadcn.html.twig',
+                ],
             ]);
         }
 

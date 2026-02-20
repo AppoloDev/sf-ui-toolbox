@@ -1,0 +1,114 @@
+{#
+    Shadcn UI form theme for Symfony Forms.
+    Automatically registered via SFUIToolboxExtension.
+#}
+
+{%- block form_widget_simple -%}
+    {%- if type is defined and type == 'hidden' -%}
+        {{ parent() }}
+    {%- else -%}
+        {%- set input_class = 'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' -%}
+        {%- if errors|length > 0 -%}
+            {%- set input_class = input_class ~ ' border-destructive focus-visible:ring-destructive' -%}
+        {%- endif -%}
+        {%- set attr = attr|merge({class: (input_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+        {{ parent() }}
+    {%- endif -%}
+{%- endblock form_widget_simple -%}
+
+{%- block textarea_widget -%}
+    {%- set textarea_class = 'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' -%}
+    {%- if errors|length > 0 -%}
+        {%- set textarea_class = textarea_class ~ ' border-destructive focus-visible:ring-destructive' -%}
+    {%- endif -%}
+    {%- set attr = attr|merge({class: (textarea_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock textarea_widget -%}
+
+{%- block choice_widget_collapsed -%}
+    {%- set select_class = 'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' -%}
+    {%- if errors|length > 0 -%}
+        {%- set select_class = select_class ~ ' border-destructive focus:ring-destructive' -%}
+    {%- endif -%}
+    {%- set attr = attr|merge({class: (select_class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock choice_widget_collapsed -%}
+
+{%- block checkbox_widget -%}
+    {%- set attr = attr|merge({class: ('peer size-4 shrink-0 inline-block align-middle accent-primary rounded border-input disabled:cursor-not-allowed disabled:opacity-50 ' ~ attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock checkbox_widget -%}
+
+{%- block radio_widget -%}
+    {%- set attr = attr|merge({class: ('peer size-4 shrink-0 inline-block align-middle accent-primary border-input disabled:cursor-not-allowed disabled:opacity-50 ' ~ attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock radio_widget -%}
+
+{%- block file_widget -%}
+    {%- set attr = attr|merge({class: ('flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ' ~ attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock file_widget -%}
+
+{%- block form_label -%}
+    {%- set label_attr = label_attr|merge({class: ('text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ' ~ label_attr.class|default(''))|trim}) -%}
+    {{ parent() }}
+{%- endblock form_label -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <div class="text-destructive text-sm font-normal" role="alert">
+            {%- if errors|length == 1 -%}
+                {{ errors[0].message }}
+            {%- else -%}
+                <ul class="ml-4 flex list-disc flex-col gap-1">
+                    {%- for error in errors -%}
+                        <li>{{ error.message }}</li>
+                    {%- endfor -%}
+                </ul>
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block form_help -%}
+    {%- if help is not empty -%}
+        <p id="{{ id }}_help" class="text-muted-foreground text-sm">
+            {%- if translation_domain is same as(false) -%}
+                {{- help_html is same as(false) ? help : help|raw -}}
+            {%- else -%}
+                {{- help_html is same as(false) ? help|trans(help_translation_parameters, translation_domain) : help|trans(help_translation_parameters, translation_domain)|raw -}}
+            {%- endif -%}
+        </p>
+    {%- endif -%}
+{%- endblock form_help -%}
+
+{%- block form_row -%}
+    <div class="space-y-2">
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block checkbox_row -%}
+    <div class="flex items-start gap-2">
+        {{- form_widget(form) -}}
+        <div class="space-y-1 leading-none">
+            {{- form_label(form) -}}
+            {{- form_help(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+    </div>
+{%- endblock checkbox_row -%}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="flex items-center gap-2">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, {label_attr: {class: 'font-normal cursor-pointer'}}) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
