@@ -1,13 +1,19 @@
-{% set color = type == 'success' ? 'green' : (type in ['danger', 'error'] ? 'red' : 'orange') %}
-
-{% set colorClasses = {
-    'green': 'bg-green-50 border-green-200 text-green-800',
-    'red': 'bg-red-50 border-red-200 text-red-800',
-    'orange': 'bg-orange-50 border-orange-200 text-orange-800',
-} %}
-
+{# @prop message The message to display #}
+{# @prop type 'success'|'error'|'danger'|'warning' The toast type, default to 'success' #}
+{%- props message, type = 'success' -%}
+{%- set style = html_cva(
+    base: 'rounded-xl border p-4 flex items-center justify-between gap-3 shadow-sm',
+    variants: {
+        type: {
+            success: 'border-green-200 bg-green-50 text-green-800',
+            error: 'border-red-200 bg-red-50 text-red-800',
+            danger: 'border-red-200 bg-red-50 text-red-800',
+            warning: 'border-orange-200 bg-orange-50 text-orange-800',
+        },
+    },
+) -%}
 <dismiss-toast id="dismiss-toast">
-    <div class="rounded-xl border p-4 flex items-center justify-between gap-3 shadow-sm {{ colorClasses[color] }}" role="alert">
+    <div class="{{ style.apply({type: type}, attributes.render('class'))|tailwind_merge }}" role="alert" {{ attributes }}>
         <span class="text-sm font-medium">{{ message }}</span>
         <button type="button" data-hs-remove-element="#dismiss-toast" class="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
             <twig:ux:icon name="ph:x" class="h-4 w-4" />
