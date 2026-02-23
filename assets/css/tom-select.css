@@ -1,0 +1,100 @@
+@import "tom-select/dist/css/tom-select.css";
+
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+tom-select {
+    display: block;
+    width: 100%;
+}
+
+/* ── Control (the visible input area) ───────────────────────────────────── */
+tom-select .ts-wrapper .ts-control {
+    @apply flex items-center gap-1 px-3 py-2 w-full min-h-9
+           border border-input bg-background text-foreground text-sm
+           rounded-md shadow-none cursor-pointer transition-colors;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+tom-select .ts-wrapper.focus .ts-control {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+/* ── Single: chevron arrow ──────────────────────────────────────────────── */
+tom-select .ts-wrapper.single .ts-control,
+tom-select .ts-wrapper.single.input-active .ts-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25em 1.25em;
+    padding-right: 2rem;
+}
+
+/* ── Multi ───────────────────────────────────────────────────────────────── */
+tom-select .ts-wrapper.multi .ts-control {
+    @apply flex-wrap;
+}
+
+tom-select .ts-wrapper.multi .ts-control > div {
+    @apply bg-secondary text-secondary-foreground text-xs px-2 py-0.5 rounded-sm m-0;
+}
+
+/* ── Search input inside control ────────────────────────────────────────── */
+tom-select .ts-control input {
+    @apply bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-sm flex-1;
+    min-width: 1rem;
+}
+
+/* ── Disabled ───────────────────────────────────────────────────────────── */
+tom-select .ts-wrapper.disabled .ts-control {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+/* ── Dropdown ───────────────────────────────────────────────────────────── */
+.ts-dropdown {
+    @apply bg-popover text-popover-foreground border border-border rounded-md shadow-md text-sm overflow-hidden;
+    margin-top: 4px;
+    z-index: 9999;
+}
+
+/* ── Dropdown search input ──────────────────────────────────────────────── */
+.ts-dropdown .dropdown-input-wrap {
+    @apply p-2 border-b border-border;
+}
+
+.ts-dropdown .dropdown-input-wrap input {
+    @apply w-full bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground border-0 ring-0;
+}
+
+/* ── Options ────────────────────────────────────────────────────────────── */
+.ts-dropdown .ts-dropdown-content {
+    @apply max-h-60 overflow-y-auto;
+}
+
+.ts-dropdown [data-selectable].option {
+    @apply flex items-center px-2 py-1.5 text-sm cursor-pointer text-popover-foreground;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .active {
+    @apply bg-accent text-accent-foreground;
+}
+
+/* ── Optgroup ───────────────────────────────────────────────────────────── */
+.ts-dropdown .optgroup-header {
+    @apply px-2 py-1.5 text-xs font-semibold text-muted-foreground border-b border-border bg-muted/50;
+}
+
+/* ── No results / Create ────────────────────────────────────────────────── */
+.ts-dropdown .no-results,
+.ts-dropdown .create {
+    @apply px-2 py-1.5 text-sm text-muted-foreground;
+}
+
+.ts-dropdown .create:hover {
+    @apply bg-accent text-accent-foreground;
+}
+
+/* ── Remove button (multi) ──────────────────────────────────────────────── */
+.ts-control .remove {
+    @apply text-muted-foreground hover:text-foreground ml-1;
+}
