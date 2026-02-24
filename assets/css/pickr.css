@@ -1,0 +1,13 @@
+@import '@simonwep/pickr/dist/themes/nano.min.css';
+
+/* Shadcn design system overrides */
+.pcr-app {
+    @apply bg-card border border-border;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+}
+
+.pcr-result {
+    @apply bg-background text-foreground border border-input;
+    border-radius: 8px !important;
+}
