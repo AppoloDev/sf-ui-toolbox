@@ -5,6 +5,7 @@
     @apply bg-card border border-border;
     border-radius: 12px !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
+    z-index: 10000 !important;
 }
 
 .pcr-result {

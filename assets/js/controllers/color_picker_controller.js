@@ -15,7 +15,7 @@ export default class extends Controller {
             const rect = this.element.getBoundingClientRect();
             this._anchor.style.left = `${rect.left}px`;
             this._anchor.style.top  = `${rect.bottom + 8}px`;
-            this._pickr.setColor(this.element.value || '#000000', true);
+            this._pickr.setColor(this.element.value || '#000000', false);
             this._pickr.show();
         });
     }
