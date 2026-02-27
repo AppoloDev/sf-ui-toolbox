@@ -1,5 +1,5 @@
 {% if allowDisplay is defined and allowDisplay %}
-    <div class="flex flex-col py-1 first:pt-0 last:pb-0">
+    <div class="flex flex-col py-1 first:pt-0 last:pb-0 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-border">
         {% block dropdownItemContainerItems %}{% endblock %}
     </div>
 {% endif %}
