@@ -1,4 +1,4 @@
-<div class="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+<div class="bg-card border border-border rounded-xl shadow-sm">
     {% block header %}
         {% if headerTitle is not null and headerTitle is not empty %}
             <div class="px-6 py-4 flex justify-between items-center border-b border-border">
@@ -58,7 +58,7 @@
 
     {% block table %}
         {% if pagination is not null and pagination is not empty %}
-            <div class="overflow-x-auto">
+            <div>
                 <table class="min-w-full">
                     {% block table_header %}
                         {% if tableColumns is defined %}
