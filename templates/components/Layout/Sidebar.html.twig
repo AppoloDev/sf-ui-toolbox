@@ -20,6 +20,13 @@
         {% for link in mainLinks %}
             {% if link.isGranted %}
                 {%- set isActive = app.request.attributes.get('_route') == link.route -%}
+                {%- if isActive and link.params is defined -%}
+                    {%- for key, value in link.params -%}
+                        {%- if app.request.query.get(key) != value -%}
+                            {%- set isActive = false -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
                 <div class="{{ isActive ? 'pr-4' : 'px-3' }}">
                     <a
                         class="flex items-center gap-3 py-2.5 text-sm font-medium transition-colors {{ isActive ? 'pl-6 rounded-r-full bg-sidebar-accent text-sidebar-accent-foreground' : 'px-3 rounded-lg text-muted-foreground hover:text-primary' }}"
