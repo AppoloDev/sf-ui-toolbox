@@ -6,6 +6,17 @@ tom-select {
     width: 100%;
 }
 
+/* TomSelect copies all classes from the original <input> to .ts-wrapper.
+   Reset those styles so only .ts-control is visually styled. */
+tom-select .ts-wrapper {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    height: auto !important;
+}
+
 /* ── Control (the visible input area) ───────────────────────────────────── */
 tom-select .ts-wrapper .ts-control {
     @apply flex items-center gap-1 px-3 py-2 w-full min-h-9
@@ -16,7 +27,14 @@ tom-select .ts-wrapper .ts-control {
 }
 
 tom-select .ts-wrapper.focus .ts-control {
-    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+    border-color: hsl(var(--ring));
+    box-shadow: 0 0 0 3px hsl(var(--ring) / 0.5) !important;
+}
+
+tom-select .ts-wrapper[aria-invalid="true"] .ts-control,
+tom-select .ts-wrapper.invalid .ts-control {
+    @apply border-destructive;
+    box-shadow: 0 0 0 3px hsl(var(--destructive) / 0.2) !important;
 }
 
 /* ── Single: chevron arrow ──────────────────────────────────────────────── */
