@@ -9,7 +9,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class Sidebar
 {
     public string $routePrefix = '';
-    public array $mainLinks = [];
     public ?string $userName = null;
     public ?string $userRole = null;
     public ?string $userInitials = null;
@@ -19,7 +18,10 @@ class Sidebar
     {
     }
 
-    public function mount(): void
+    /**
+     * @param array<int, array{label: string, route: string, params?: array<string, string>, isGranted: bool, icon: string}> $mainLinks
+     */
+    public function mount(array $mainLinks = []): void
     {
         $request = $this->requestStack->getCurrentRequest();
         $currentRoute = $request?->attributes->get('_route') ?? '';
@@ -39,6 +41,6 @@ class Sidebar
             $link['isActive'] = $isActive;
 
             return $link;
-        }, $this->mainLinks);
+        }, $mainLinks);
     }
 }
