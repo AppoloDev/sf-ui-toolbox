@@ -1,10 +1,11 @@
 {# @prop allowDisplay boolean Show the component, default to true #}
 {# @prop swalTitle Dialog title #}
 {# @prop swalText Dialog body text #}
-{# @prop confirmLink URL to navigate to on confirmation #}
+{# @prop confirmLink URL to navigate to on confirmation (GET — legacy, prefer confirmFormId) #}
+{# @prop confirmFormId ID of a hidden <form> to submit on confirmation (POST + CSRF) #}
 {# @prop confirmLabel Override label for confirm button #}
 {# @block content The trigger element #}
-{%- props allowDisplay = true, swalTitle = 'Êtes-vous sûr ?', swalText = '', confirmLink = null, confirmLabel = null -%}
+{%- props allowDisplay = true, swalTitle = 'Êtes-vous sûr ?', swalText = '', confirmLink = null, confirmFormId = null, confirmLabel = null -%}
 {% if allowDisplay is same as(true) %}
     {%- set _sa_id = 'sweetalert-' ~ random() -%}
     <div
@@ -33,7 +34,13 @@
                     class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
                     data-action="click->dialog#close"
                 >{{ 'cancel'|trans }}</button>
-                {% if confirmLink %}
+                {% if confirmFormId %}
+                    <button
+                        type="submit"
+                        form="{{ confirmFormId }}"
+                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
+                    >{{- confirmLabel ?? 'i_confirm'|trans -}}</button>
+                {% elseif confirmLink %}
                     <twig:SFUIToolbox:Generic:Button variant="destructive" link="{{ confirmLink }}">
                         {{- confirmLabel ?? 'i_confirm'|trans -}}
                     </twig:SFUIToolbox:Generic:Button>
