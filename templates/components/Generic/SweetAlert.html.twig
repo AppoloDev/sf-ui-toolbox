@@ -38,7 +38,7 @@
                     <button
                         type="submit"
                         form="{{ confirmFormId }}"
-                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
+                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm text-white font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
                     >{{- confirmLabel ?? 'i_confirm'|trans -}}</button>
                 {% elseif confirmLink %}
                     <twig:SFUIToolbox:Generic:Button variant="destructive" link="{{ confirmLink }}">

@@ -1,61 +1,4 @@
 <div class="bg-card border border-border rounded-xl">
-    {% block header %}
-        {% if headerTitle is not null and headerTitle is not empty %}
-            <div class="px-6 py-4 flex justify-between items-center border-b border-border">
-                <div>
-                    {% block header_title %}
-                        <h2 class="text-base font-semibold text-card-foreground">
-                            {{ headerTitle|raw }}
-                        </h2>
-                    {% endblock %}
-                </div>
-                <div class="flex items-center gap-3">
-                    {% block header_actions %}{% endblock %}
-                </div>
-            </div>
-        {% endif %}
-    {% endblock %}
-
-    {% block search %}
-        <form>
-            <div class="px-4 py-3 flex justify-between items-center gap-4 border-b border-border bg-muted/20">
-                {% block search_bar %}
-                    <div class="flex gap-3">
-                        {% block search_input %}
-                            <div class="relative">
-                                <input type="text"
-                                       value="{{ app.request.query.get('q') }}"
-                                       name="q"
-                                       class="h-9 py-2 px-3 pl-9 border border-input rounded-lg text-sm bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring w-full md:w-72"
-                                       placeholder="{{ 'your_search'|trans }}"/>
-                                <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
-                                    <twig:ux:icon name="lucide:search" class="size-3.5 text-muted-foreground"/>
-                                </div>
-                            </div>
-                        {% endblock %}
-                        {% block search_extraFields %}{% endblock %}
-                    </div>
-                {% endblock %}
-
-                {% block search_actions %}
-                    <div class="flex items-center gap-2">
-                        {% set routeParams = {'_reset': true} %}
-                        {% if app.request.attributes.get('_route_params') is not empty %}
-                            {% set routeParams = routeParams|merge(app.request.attributes.get('_route_params')) %}
-                        {% endif %}
-                        <twig:SFUIToolbox:Generic:Button
-                            variant="ghost"
-                            link="{{ path(app.request.attributes.get('_route'), routeParams) }}"
-                        >{{ 'reset'|trans }}</twig:SFUIToolbox:Generic:Button>
-                        <twig:SFUIToolbox:Generic:Button type="submit">
-                            {{ 'search'|trans }}
-                        </twig:SFUIToolbox:Generic:Button>
-                    </div>
-                {% endblock %}
-            </div>
-        </form>
-    {% endblock %}
-
     {% block table %}
         {% if pagination is not null and pagination is not empty %}
             <div>
@@ -73,11 +16,7 @@
                                         {% set textPosition = 'text-center' %}
                                     {% endif %}
                                     <th scope="col" class="px-6 py-3 {{ textPosition }} whitespace-nowrap">
-                                        {% if 'sortable' in column or 'asc' in column or 'desc' in column %}
-                                            {{ column|raw }}
-                                        {% else %}
-                                            <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{{ column|raw }}</span>
-                                        {% endif %}
+                                        <span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground [&_a]:text-muted-foreground [&_a:hover]:text-foreground [&_a]:no-underline">{{ column|raw }}</span>
                                     </th>
                                 {% endfor %}
                             </tr>
@@ -93,30 +32,6 @@
                         </tbody>
                     {% endblock %}
                 </table>
-            </div>
-        {% else %}
-            {% if app.request.query.has('q') %}
-                {% block emptyListOnSearch %}
-                    <twig:SFUIToolbox:List:ListEmpty
-                        description="{{ 'we_didnt_find_anything_for_your_search'|trans }}: {{ app.request.query.get('q') }}"
-                    />
-                {% endblock %}
-            {% else %}
-                {% block emptyList %}{% endblock %}
-            {% endif %}
-        {% endif %}
-    {% endblock %}
-
-    {% block footer %}
-        {% if pagination is not null and pagination is not empty %}
-            <div class="px-6 py-4 flex items-center justify-between border-t border-border">
-                <p class="text-sm text-muted-foreground">
-                    <span class="font-medium text-foreground">{{ pagination.totalItemCount }}</span>
-                    {{ 'result'|trans }}{{ pagination.totalItemCount > 1 ? 's' : '' }}
-                </p>
-                <div>
-                    {{ knp_pagination_render(pagination) }}
-                </div>
             </div>
         {% endif %}
     {% endblock %}
