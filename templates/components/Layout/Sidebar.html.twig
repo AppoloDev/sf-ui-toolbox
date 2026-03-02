@@ -13,15 +13,43 @@
     <nav class="flex-1 overflow-y-auto py-4 space-y-0.5 mt-2">
         {% for link in processedLinks %}
             {% if link.isGranted %}
-                <div class="{{ link.isActive ? 'pr-4' : 'px-3' }}">
-                    <a
-                        class="flex items-center gap-3 py-2.5 text-sm font-medium transition-colors {{ link.isActive ? 'pl-6 rounded-r-full bg-sidebar-accent text-sidebar-accent-foreground' : 'px-3 rounded-lg text-muted-foreground hover:text-primary' }}"
-                        href="{{ path(link.route, link.params ?? []) }}"
-                    >
-                        <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0"/>
-                        <span>{{ link.label }}</span>
-                    </a>
-                </div>
+
+                {# ── Group with children ── #}
+                {% if link.children is defined %}
+                    <details class="group/details px-3" {{ link.isOpen ? 'open' : '' }}>
+                        <summary class="flex items-center gap-3 py-2.5 px-3 text-sm font-medium rounded-lg text-muted-foreground hover:text-primary transition-colors cursor-pointer list-none select-none">
+                            <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0"/>
+                            <span class="flex-1">{{ link.label }}</span>
+                            <twig:ux:icon name="lucide:chevron-right" class="size-3.5 transition-transform group-open/details:rotate-90"/>
+                        </summary>
+                        <div class="mt-0.5 ml-3 border-l border-border pl-3 space-y-0.5">
+                            {% for child in link.children %}
+                                {% if child.isGranted %}
+                                    <a
+                                        class="flex items-center gap-2.5 py-2 px-2 text-sm rounded-md transition-colors {{ child.isActive ? 'font-medium text-primary bg-sidebar-accent' : 'text-muted-foreground hover:text-primary' }}"
+                                        href="{{ path(child.route, child.params ?? []) }}"
+                                    >
+                                        <twig:ux:icon name="{{ child.icon }}" class="size-3.5 shrink-0"/>
+                                        <span>{{ child.label }}</span>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </details>
+
+                {# ── Flat link ── #}
+                {% else %}
+                    <div class="{{ link.isActive ? 'pr-4' : 'px-3' }}">
+                        <a
+                            class="flex items-center gap-3 py-2.5 text-sm font-medium transition-colors {{ link.isActive ? 'pl-6 rounded-r-full bg-sidebar-accent text-sidebar-accent-foreground' : 'px-3 rounded-lg text-muted-foreground hover:text-primary' }}"
+                            href="{{ path(link.route, link.params ?? []) }}"
+                        >
+                            <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0"/>
+                            <span>{{ link.label }}</span>
+                        </a>
+                    </div>
+                {% endif %}
+
             {% endif %}
         {% endfor %}
     </nav>
