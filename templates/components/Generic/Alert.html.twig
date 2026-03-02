@@ -1,9 +1,4 @@
-{# @prop variant 'default'|'destructive'|'green'|'orange'|'blue'|'indigo' The variant, default to `default` #}
-{# @prop color 'green'|'red'|'orange'|'blue'|'indigo' Shorthand mapped to variant #}
-{# @prop header Optional title string #}
-{# @prop description Optional description string #}
-{# @prop links Optional array of {label, link} #}
-{# @block content Slot for custom content (Alert:Title, Alert:Description, icons…) #}
+{%- props variant = 'default', color = null, header = null, description = null, links = null -%}
 {%- set colorToVariant = {
     'green': 'green',
     'red': 'destructive',
@@ -11,7 +6,7 @@
     'blue': 'blue',
     'indigo': 'indigo',
 } -%}
-{%- set resolvedVariant = color is defined and color is not null ? (colorToVariant[color] ?? 'default') : variant -%}
+{%- set resolvedVariant = color is not null ? (colorToVariant[color] ?? 'default') : variant -%}
 {%- set style = html_cva(
     base: 'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
     variants: {
@@ -30,13 +25,13 @@
     role="alert"
     {{ attributes }}
 >
-    {% if header is defined and header is not null and header is not empty %}
+    {% if header is not null and header is not empty %}
         <twig:SFUIToolbox:Generic:Alert:Title>{{ header }}</twig:SFUIToolbox:Generic:Alert:Title>
     {% endif %}
-    {% if description is defined and description is not null and description is not empty %}
+    {% if description is not null and description is not empty %}
         <twig:SFUIToolbox:Generic:Alert:Description>{{ description }}</twig:SFUIToolbox:Generic:Alert:Description>
     {% endif %}
-    {% if links is defined and links is not null and links is not empty %}
+    {% if links is not null and links is not empty %}
         <div class="flex gap-3 mt-3">
             {% for link in links %}
                 <a href="{{ link.link }}" class="text-sm font-medium underline underline-offset-4">{{ link.label }}</a>
