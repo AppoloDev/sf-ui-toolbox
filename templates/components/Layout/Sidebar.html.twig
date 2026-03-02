@@ -1,9 +1,3 @@
-{# @prop routePrefix Route prefix for the dashboard link (e.g. 'admin', 'company') #}
-{# @prop mainLinks Array of {label, route, params, isGranted, icon} #}
-{# @prop userName Optional — user display name for the bottom card #}
-{# @prop userRole Optional — user role or company name #}
-{# @prop userInitials Optional — avatar initials, defaults to first letter of userName #}
-{%- props routePrefix, mainLinks, userName = null, userRole = null, userInitials = null -%}
 <aside
     data-sidebar-target="panel"
     class="-translate-x-full fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 ease-in-out lg:relative lg:inset-auto lg:z-auto lg:translate-x-0 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border shrink-0"
@@ -17,22 +11,14 @@
 
     {# Navigation #}
     <nav class="flex-1 overflow-y-auto py-4 space-y-0.5 mt-2">
-        {% for link in mainLinks %}
+        {% for link in processedLinks %}
             {% if link.isGranted %}
-                {%- set isActive = app.request.attributes.get('_route') == link.route -%}
-                {%- if isActive and link.params is defined -%}
-                    {%- for key, value in link.params -%}
-                        {%- if app.request.query.get(key) != value -%}
-                            {%- set isActive = false -%}
-                        {%- endif -%}
-                    {%- endfor -%}
-                {%- endif -%}
-                <div class="{{ isActive ? 'pr-4' : 'px-3' }}">
+                <div class="{{ link.isActive ? 'pr-4' : 'px-3' }}">
                     <a
-                        class="flex items-center gap-3 py-2.5 text-sm font-medium transition-colors {{ isActive ? 'pl-6 rounded-r-full bg-sidebar-accent text-sidebar-accent-foreground' : 'px-3 rounded-lg text-muted-foreground hover:text-primary' }}"
+                        class="flex items-center gap-3 py-2.5 text-sm font-medium transition-colors {{ link.isActive ? 'pl-6 rounded-r-full bg-sidebar-accent text-sidebar-accent-foreground' : 'px-3 rounded-lg text-muted-foreground hover:text-primary' }}"
                         href="{{ path(link.route, link.params ?? []) }}"
                     >
-                        <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0 {{ isActive ? '' : '' }}"/>
+                        <twig:ux:icon name="{{ link.icon }}" class="size-4 shrink-0"/>
                         <span>{{ link.label }}</span>
                     </a>
                 </div>
