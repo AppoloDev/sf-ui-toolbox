@@ -51,6 +51,7 @@ class SFUIToolboxExtension extends Extension implements PrependExtensionInterfac
             $container->prependExtensionConfig('knp_paginator', [
                 'template' => [
                     'pagination' => '@SFUIToolbox/paginator/pagination.html.twig',
+                    'sortable'   => '@SFUIToolbox/paginator/sortable.html.twig',
                 ],
             ]);
         }

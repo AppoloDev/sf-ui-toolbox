@@ -1,0 +1,15 @@
+<a{% for attr, value in options %} {{ attr }}="{{ value }}"{% endfor %}
+   class="inline-flex items-center gap-1.5 font-medium text-foreground hover:text-primary transition-colors group whitespace-nowrap">
+    {{- title -}}
+    <span class="{% if sorted %}text-primary{% else %}text-muted-foreground/50 group-hover:text-primary/70{% endif %}">
+        {% if sorted %}
+            {% if direction == 'desc' %}
+                <twig:ux:icon name="fa6-solid:sort-down" class="size-3"/>
+            {% else %}
+                <twig:ux:icon name="fa6-solid:sort-up" class="size-3"/>
+            {% endif %}
+        {% else %}
+            <twig:ux:icon name="fa6-solid:sort" class="size-3"/>
+        {% endif %}
+    </span>
+</a>
