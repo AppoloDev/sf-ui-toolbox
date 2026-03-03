@@ -1,7 +1,7 @@
-<a{% for attr, value in options %} {{ attr }}="{{ value }}"{% endfor %}
-   class="inline-flex items-center gap-1.5 font-medium text-foreground hover:text-primary transition-colors group whitespace-nowrap">
+<a{% for attr, value in options|filter((v, k) => k != 'class') %} {{ attr }}="{{ value }}"{% endfor %}
+   class="inline-flex items-center gap-1.5 font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap group">
     {{- title -}}
-    <span class="{% if sorted %}text-primary{% else %}text-muted-foreground/50 group-hover:text-primary/70{% endif %}">
+    <span class="{% if sorted %}text-primary{% else %}opacity-40 group-hover:opacity-80{% endif %} transition-opacity">
         {% if sorted %}
             {% if direction == 'desc' %}
                 <twig:ux:icon name="fa6-solid:sort-down" class="size-3"/>
