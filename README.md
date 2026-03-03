@@ -1,87 +1,108 @@
 # sf-ui-toolbox
 
-Shared Twig components for Symfony / Tailwind CSS projects.
+Shared Twig components, form widgets, Stimulus controllers and HTML layouts for **Symfony 8+ / Tailwind CSS 4** projects.
+
+Basé sur [shadcn/ui](https://ui.shadcn.com/) et [CVA](https://cva.style). Auto-configuré via `SFUIToolboxExtension`.
 
 ---
 
-## `html_cva()` — Class Variance Authority for Twig
+## Ce que le bundle fournit
 
-`html_cva()` is a Twig function (provided by this bundle) that mirrors the [`cva`](https://cva.style) pattern from the JS ecosystem. It generates a class string based on a base class and a set of variant maps.
-
-### Signature
-
-```twig
-{% set style = html_cva(
-    base: "...",       {# always-applied classes #}
-    variants: {        {# variant groups #}
-        groupName: {
-            value1: "classes-for-value1",
-            value2: "classes-for-value2",
-        },
-    },
-) %}
-
-{# Apply by passing the chosen variant values #}
-<div class="{{ style.apply({groupName: 'value1'}, extraClasses) }}">
-```
-
-### Example — Button
-
-```twig
-{% set style = html_cva(
-    base: "inline-flex items-center rounded-md text-sm font-medium transition-all",
-    variants: {
-        variant: {
-            default:     'bg-primary text-primary-foreground hover:bg-primary/90',
-            outline:     'border bg-background hover:bg-accent',
-            ghost:       'hover:bg-accent hover:text-accent-foreground',
-            destructive: 'bg-destructive text-white hover:bg-destructive/90',
-        },
-        size: {
-            default: 'h-9 px-4 py-2',
-            sm:      'h-8 px-3',
-            lg:      'h-10 px-6',
-            icon:    'size-9',
-        },
-    },
-) %}
-
-<button class="{{ style.apply({variant: 'outline', size: 'sm'}) }}">
-    Click me
-</button>
-```
-
-`style.apply(variants, extraClasses)` merges base + resolved variant classes + any extra classes passed by the caller (supports `tailwind_merge` via `attributes.render('class')`).
+| Catégorie | Contenu |
+|-----------|---------|
+| **Form themes** | Thème shadcn complet (inputs, selects, checkboxes, labels, erreurs) + toggle password |
+| **Layouts HTML** | `sidebar`, `auth`, `auth_split` |
+| **Composants Twig** | Button, Badge, Alert, Toast, Dialog, SweetAlert, TableList, Dropdown, SearchBar, Pagination… |
+| **Stimulus controllers** | `sidebar`, `dropdown`, `dialog`, `dismiss`, `toggle-password`, `color-picker` |
+| **Web components** | `<tom-select>` (single + multi-select avec plugins) |
+| **CSS** | TomSelect theming, Pickr overrides |
 
 ---
 
-## Components
+## Installation
 
-### Generic/Button
-
-Props: `variant` (default/secondary/destructive/outline/ghost/link), `size` (default/sm/lg/icon/icon-sm/icon-lg), `as` (button|a), `link` (URL shorthand → renders `<a>`), `allowDisplay`.
-
-```twig
-<twig:SFUIToolbox:Generic:Button variant="outline" size="sm">
-    Label
-</twig:SFUIToolbox:Generic:Button>
-
-{# As a link #}
-<twig:SFUIToolbox:Generic:Button link="{{ path('route') }}" variant="ghost">
-    Go somewhere
-</twig:SFUIToolbox:Generic:Button>
+```bash
+composer require appolodev/sf-ui-toolbox
 ```
 
-### Generic/SectionHeader
+Le bundle est auto-découvert. Aucune configuration manuelle n'est nécessaire.
 
-Props: `icon`, `title`, `description`, `class`.
+Pour les assets JS, importer les controllers et web components dans votre bundle Stimulus :
 
-### Generic/HelpCard
+```js
+import DialogController         from '../../../vendor/appolodev/sf-ui-toolbox/assets/js/controllers/dialog_controller.js'
+import SidebarController        from '../../../vendor/appolodev/sf-ui-toolbox/assets/js/controllers/sidebar_controller.js'
+import DismissController        from '../../../vendor/appolodev/sf-ui-toolbox/assets/js/controllers/dismiss_controller.js'
+import DropdownController       from '../../../vendor/appolodev/sf-ui-toolbox/assets/js/controllers/dropdown_controller.js'
+import TogglePasswordController from '../../../vendor/appolodev/sf-ui-toolbox/assets/js/controllers/toggle_password_controller.js'
 
-Props: `title`, `description`, `link`, `linkLabel`.
+app.register('dialog',          DialogController)
+app.register('sidebar',         SidebarController)
+app.register('dismiss',         DismissController)
+app.register('dropdown',        DropdownController)
+app.register('toggle-password', TogglePasswordController)
+```
 
-### List/TableList
+---
 
-Blocks: `header_title`, `header_actions`, `search_bar`, `search_extraFields`, `search_actions`, `table_header`, `table_items`, `table_item`, `emptyList`, `footer`.
+## Utilisation rapide
 
-Props: `headerTitle`, `tableColumns`, `pagination`.
+### Composants Twig
+
+```twig
+{# Bouton primary #}
+<twig:SFUIToolbox:Generic:Button>Sauvegarder</twig:SFUIToolbox:Generic:Button>
+
+{# Bouton outline small #}
+<twig:SFUIToolbox:Generic:Button variant="outline" size="sm">Annuler</twig:SFUIToolbox:Generic:Button>
+
+{# Badge statut #}
+<twig:SFUIToolbox:Generic:Badge variant="green" label="Actif" />
+
+{# En-tête de section #}
+<twig:SFUIToolbox:Generic:SectionHeader
+    icon="lucide:palette"
+    title="Couleurs de marque"
+    description="Palette de l'identité visuelle."
+/>
+```
+
+### Toggle Password
+
+```php
+// Dans un FormType
+$builder->add('password', PasswordType::class, ['toggle' => true]);
+```
+
+### TableList
+
+```twig
+{% component 'SFUIToolbox:List:TableList' with {pagination: pagination} %}
+    {% block table_items %}
+        {% for item in pagination %}
+            <tr><td>{{ item.name }}</td></tr>
+        {% endfor %}
+    {% endblock %}
+{% endcomponent %}
+```
+
+---
+
+## Documentation complète
+
+La documentation détaillée est dans le dossier [`docs/`](./docs/index.md) :
+
+- [Installation & Configuration](./docs/installation.md)
+- [Pattern html_cva()](./docs/html-cva.md)
+- **Formulaires**
+  - [Thèmes (shadcn + toggle_password)](./docs/form/themes.md)
+  - [Form Types & Extensions](./docs/form/types.md)
+- **Composants**
+  - [Layouts (sidebar, auth, auth_split)](./docs/components/layout.md)
+  - [Generics (Button, Badge, Alert, Dialog…)](./docs/components/generic.md)
+  - [List (TableList, ListEmpty)](./docs/components/list.md)
+  - [Dropdown (DropdownMenu, DropdownItemContainer)](./docs/components/dropdown.md)
+  - [Form (FormSubmit)](./docs/components/form-submit.md)
+- **JavaScript**
+  - [Stimulus Controllers](./docs/stimulus-controllers.md)
+  - [Web Components (tom-select)](./docs/web-components.md)
