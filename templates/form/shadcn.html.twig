@@ -10,7 +10,7 @@
         {%- set _cls = 'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' -%}
         {%- if errors|length > 0 -%}{%- set _cls = _cls ~ ' border-destructive focus-visible:ring-destructive' -%}{%- endif -%}
         {%- set attr = attr|merge({class: (_cls ~ ' ' ~ attr.class|default(''))|trim}) -%}
-        <input {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}"{% endif %} />
+        <input type="{{ type|default('text') }}" {{ block('widget_attributes') }}{% if value is not empty %} value="{{ value }}"{% endif %} />
     {%- endif -%}
 {%- endblock form_widget_simple -%}
 

@@ -31,6 +31,7 @@ class SFUIToolboxExtension extends Extension implements PrependExtensionInterfac
                 ],
                 'form_themes' => [
                     '@SFUIToolbox/form/shadcn.html.twig',
+                    '@SFUIToolbox/form/toggle_password.html.twig',
                 ],
             ]);
         }
