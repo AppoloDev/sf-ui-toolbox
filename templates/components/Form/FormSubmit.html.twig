@@ -15,12 +15,12 @@
 
         {% if deleteButtonLink is not null %}
             <twig:SFUIToolbox:Generic:SweetAlert
-                swalTitle="{{ deleteSwalTitle }}"
+                swalTitle="{{ deleteSwalTitle ?: 'are_you_sure'|trans }}"
                 swalText="{{ deleteSwalText }}"
                 confirmLink="{{ deleteButtonLink }}"
             >
                 <twig:block name="content">
-                    <twig:SFUIToolbox:Generic:Button variant="destructive">{{ 'ask_delete'|trans }}</twig:SFUIToolbox:Generic:Button>
+                    <twig:SFUIToolbox:Generic:Button variant="destructive">{{ 'delete'|trans }}</twig:SFUIToolbox:Generic:Button>
                 </twig:block>
             </twig:SFUIToolbox:Generic:SweetAlert>
         {% endif %}

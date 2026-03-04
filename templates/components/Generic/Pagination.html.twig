@@ -2,7 +2,7 @@
 {% if pagination is not null and pagination is not empty %}
     <div class="flex items-center justify-between pt-4 pb-12">
         <p class="text-sm text-muted-foreground">
-            Affichage de {{ pagination.count }} sur {{ pagination.totalItemCount }} {{ item_label }}{{ pagination.totalItemCount > 1 ? 's' : '' }}
+            {{ 'showing_x_of_y_items'|trans({'%count%': pagination.count, '%total%': pagination.totalItemCount, '%item%': item_label ~ (pagination.totalItemCount > 1 ? 's' : '')}) }}
         </p>
         {% if pagination.pageCount > 1 %}
             <div class="flex gap-3">
@@ -10,23 +10,23 @@
                     <a href="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber - 1})) }}"
                        class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card hover:bg-muted transition-colors">
                         <twig:ux:icon name="lucide:chevron-left" class="size-4"/>
-                        Précédent
+                        {{ 'previous'|trans }}
                     </a>
                 {% else %}
                     <span class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-muted text-muted-foreground opacity-50 cursor-not-allowed">
                         <twig:ux:icon name="lucide:chevron-left" class="size-4"/>
-                        Précédent
+                        {{ 'previous'|trans }}
                     </span>
                 {% endif %}
                 {% if pagination.currentPageNumber < pagination.pageCount %}
                     <a href="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber + 1})) }}"
                        class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card hover:bg-muted transition-colors">
-                        Suivant
+                        {{ 'next'|trans }}
                         <twig:ux:icon name="lucide:chevron-right" class="size-4"/>
                     </a>
                 {% else %}
                     <span class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-muted text-muted-foreground opacity-50 cursor-not-allowed">
-                        Suivant
+                        {{ 'next'|trans }}
                         <twig:ux:icon name="lucide:chevron-right" class="size-4"/>
                     </span>
                 {% endif %}

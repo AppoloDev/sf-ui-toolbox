@@ -1,0 +1,27 @@
+# Generic actions
+cancel: 'Annuler'
+confirm: 'Je confirme'
+delete: 'Supprimer'
+reset: 'Réinitialiser'
+
+# Generic labels
+yes: 'Oui'
+no: 'Non'
+filter: 'Filtrer'
+search_placeholder: 'Rechercher...'
+
+# Navigation / user menu
+my_profile: 'Mon profil'
+logout: 'Se déconnecter'
+
+# Dialog
+are_you_sure: 'Êtes-vous sûr ?'
+
+# Pagination
+previous: 'Précédent'
+next: 'Suivant'
+showing_x_of_y_items: 'Affichage de %count% sur %total% %item%'
+
+# Empty states
+no_results: 'Aucun résultat.'
+try_adding_a_new_item: 'Essayez d''ajouter un nouvel élément.'

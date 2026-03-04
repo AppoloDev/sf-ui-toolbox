@@ -2,7 +2,7 @@
 {# @prop description Empty state description #}
 {# @block ListEmptyIllustration Override the illustration #}
 {# @block ListEmptyButton Slot for action button #}
-{%- props title = 'Aucun résultat.', description = "Essayez d'ajouter un nouvel élément." -%}
+{%- props title = 'no_results'|trans, description = 'try_adding_a_new_item'|trans -%}
 <twig:SFUIToolbox:Generic:Empty>
     <twig:block name="content">
         <twig:SFUIToolbox:Generic:Empty:Media>

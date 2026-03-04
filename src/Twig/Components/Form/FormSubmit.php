@@ -11,7 +11,7 @@ class FormSubmit
     public ?FormView $form = null;
     public string $submitField = 'submit';
     public ?string $deleteButtonLink = null;
-    public string $deleteSwalTitle = 'Êtes-vous sûr ?';
-    public string $deleteSwalText = 'Vous êtes sur le point d\'effectuer une action totalement irréversible …';
+    public string $deleteSwalTitle = '';
+    public string $deleteSwalText = '';
     public string $deleteSwalColor = 'red';
 }
