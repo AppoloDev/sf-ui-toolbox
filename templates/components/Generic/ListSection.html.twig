@@ -1,0 +1,73 @@
+{# @prop title Section title #}
+{# @prop description Section description (optional) #}
+{# @prop icon Lucide icon name (optional) #}
+{# @prop has_filters Whether to show a filter toggle button alongside the search bar #}
+{# @block filters Filter fields shown in the collapsible panel (only when has_filters=true) #}
+{# @block content The list/grid content #}
+{% props title = '', description = '', icon = '', has_filters = false %}
+<section class="flex-grow min-w-0 space-y-6">
+
+    {% if title %}
+        <div class="flex items-center gap-3">
+            {% if icon %}
+                <div class="size-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                    <twig:ux:icon name="{{ icon }}" class="size-5 text-primary"/>
+                </div>
+            {% endif %}
+            <div>
+                <h2 class="text-xl font-bold tracking-tight text-foreground">{{ title }}</h2>
+                {% if description %}
+                    <p class="text-sm text-muted-foreground">{{ description }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if has_filters %}
+        {# ── SearchBar card with filter toggle ───────────────────── #}
+        <div data-controller="filter-panel" class="space-y-2">
+            <div class="bg-card rounded-xl p-1.5 flex items-center border border-border gap-1">
+                <form class="flex-1 flex items-center px-2.5 gap-2 min-w-0">
+                    <span class="text-muted-foreground shrink-0">
+                        <twig:ux:icon name="iconoir:search" class="size-4"/>
+                    </span>
+                    <input
+                        name="q"
+                        value="{{ app.request.query.get('q') }}"
+                        placeholder="{{ 'search_placeholder'|trans }}"
+                        class="flex-1 min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none border-none focus:ring-0"
+                        type="text"
+                    />
+                    {% set _routeParams = {'_reset': true} %}
+                    {% if app.request.attributes.get('_route_params') is not empty %}
+                        {% set _routeParams = _routeParams|merge(app.request.attributes.get('_route_params')) %}
+                    {% endif %}
+                    <twig:SFUIToolbox:Generic:Button class="p-0 bg-transparent !text-primary hover:bg-transparent" link="{{ path(app.request.attributes.get('_route'), _routeParams) }}">
+                        <twig:ux:icon name="iconoir:xmark"/>
+                    </twig:SFUIToolbox:Generic:Button>
+                    <twig:SFUIToolbox:Generic:Button class="py-2" type="submit">
+                        {{ 'filter'|trans }}
+                    </twig:SFUIToolbox:Generic:Button>
+                </form>
+                <div class="w-px h-6 bg-border shrink-0"></div>
+                <button
+                    type="button"
+                    data-action="click->filter-panel#toggle"
+                    data-filter-panel-target="toggle"
+                    class="size-9 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground data-[active]:bg-primary/10 data-[active]:text-primary shrink-0"
+                >
+                    <twig:ux:icon name="lucide:sliders-horizontal" class="size-4"/>
+                </button>
+            </div>
+
+            <div class="hidden bg-card border border-border rounded-xl p-4" data-filter-panel-target="panel">
+                {% block filters %}{% endblock %}
+            </div>
+        </div>
+    {% else %}
+        <twig:SFUIToolbox:Generic:SearchBar/>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+</section>
