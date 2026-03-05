@@ -38,10 +38,7 @@
                         class="flex-1 min-w-0 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none border-none focus:ring-0"
                         type="text"
                     />
-                    {% set _routeParams = {'_reset': true} %}
-                    {% if app.request.attributes.get('_route_params') is not empty %}
-                        {% set _routeParams = _routeParams|merge(app.request.attributes.get('_route_params')) %}
-                    {% endif %}
+                    {% set _routeParams = app.request.attributes.get('_route_params') is not empty ? app.request.attributes.get('_route_params') : {} %}
                     <twig:SFUIToolbox:Generic:Button class="p-0 bg-transparent !text-primary hover:bg-transparent" link="{{ path(app.request.attributes.get('_route'), _routeParams) }}">
                         <twig:ux:icon name="iconoir:xmark"/>
                     </twig:SFUIToolbox:Generic:Button>
