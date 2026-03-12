@@ -8,19 +8,7 @@
 <section class="flex-grow min-w-0 space-y-6">
 
     {% if title %}
-        <div class="flex items-center gap-3">
-            {% if icon %}
-                <div class="size-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                    <twig:ux:icon name="{{ icon }}" class="size-5 text-primary"/>
-                </div>
-            {% endif %}
-            <div>
-                <h2 class="text-xl font-bold tracking-tight text-foreground">{{ title }}</h2>
-                {% if description %}
-                    <p class="text-sm text-muted-foreground">{{ description }}</p>
-                {% endif %}
-            </div>
-        </div>
+        <twig:SFUIToolbox:Generic:SectionHeader icon="{{ icon }}" title="{{ title }}" description="{{ description }}"/>
     {% endif %}
 
     {% if has_filters %}
