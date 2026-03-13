@@ -10,13 +10,13 @@
 >
     {%- block content %}{% endblock -%}
     {% if showCloseButton %}
-        <button
-            type="button"
-            class="ring-offset-background focus:ring-ring absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+        <twig:SFUIToolbox:Generic:Button
+            variant="ghost" size="icon-sm" type="button"
+            class="absolute top-4 right-4 opacity-70 hover:opacity-100"
             data-action="click->dialog#close"
         >
-            <twig:ux:icon name="lucide:x" />
+            <twig:ux:icon name="lucide:x"/>
             <span class="sr-only">Close</span>
-        </button>
+        </twig:SFUIToolbox:Generic:Button>
     {% endif %}
 </dialog>

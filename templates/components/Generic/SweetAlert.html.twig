@@ -29,19 +29,15 @@
                 {% endif %}
             </header>
             <footer class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <button
-                    type="button"
-                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-foreground ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-                    data-action="click->dialog#close"
-                >{{ 'cancel'|trans }}</button>
+                <twig:SFUIToolbox:Generic:Button variant="outline" type="button" data-action="click->dialog#close">
+                    {{- 'cancel'|trans -}}
+                </twig:SFUIToolbox:Generic:Button>
                 {% if confirmFormId %}
-                    <button
-                        type="submit"
-                        form="{{ confirmFormId }}"
-                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-destructive text-white hover:bg-destructive/90 h-10 px-4 py-2"
-                    >{{- confirmLabel ?? 'confirm'|trans -}}</button>
+                    <twig:SFUIToolbox:Generic:Button intent="destructive" type="submit" form="{{ confirmFormId }}">
+                        {{- confirmLabel ?? 'confirm'|trans -}}
+                    </twig:SFUIToolbox:Generic:Button>
                 {% elseif confirmLink %}
-                    <twig:SFUIToolbox:Generic:Button variant="destructive" link="{{ confirmLink }}">
+                    <twig:SFUIToolbox:Generic:Button intent="destructive" link="{{ confirmLink }}">
                         {{- confirmLabel ?? 'confirm'|trans -}}
                     </twig:SFUIToolbox:Generic:Button>
                 {% endif %}

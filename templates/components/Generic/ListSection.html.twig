@@ -35,14 +35,14 @@
                     </twig:SFUIToolbox:Generic:Button>
                 </form>
                 <div class="w-px h-6 bg-border shrink-0"></div>
-                <button
-                    type="button"
+                <twig:SFUIToolbox:Generic:Button
+                    variant="ghost" size="icon" type="button"
+                    class="data-[active]:bg-primary/10 data-[active]:text-primary shrink-0"
                     data-action="click->filter-panel#toggle"
                     data-filter-panel-target="toggle"
-                    class="size-9 flex items-center justify-center rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground data-[active]:bg-primary/10 data-[active]:text-primary shrink-0"
                 >
                     <twig:ux:icon name="lucide:sliders-horizontal" class="size-4"/>
-                </button>
+                </twig:SFUIToolbox:Generic:Button>
             </div>
 
             <div class="hidden bg-card border border-border rounded-xl p-4" data-filter-panel-target="panel">

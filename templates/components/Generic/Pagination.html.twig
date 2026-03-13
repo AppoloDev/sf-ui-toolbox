@@ -7,11 +7,10 @@
         {% if pagination.pageCount > 1 %}
             <div class="flex gap-3">
                 {% if pagination.currentPageNumber > 1 %}
-                    <a href="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber - 1})) }}"
-                       class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card hover:bg-muted transition-colors">
+                    <twig:SFUIToolbox:Generic:Button variant="outline" link="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber - 1})) }}">
                         <twig:ux:icon name="lucide:chevron-left" class="size-4"/>
                         {{ 'previous'|trans }}
-                    </a>
+                    </twig:SFUIToolbox:Generic:Button>
                 {% else %}
                     <span class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-muted text-muted-foreground opacity-50 cursor-not-allowed">
                         <twig:ux:icon name="lucide:chevron-left" class="size-4"/>
@@ -19,11 +18,10 @@
                     </span>
                 {% endif %}
                 {% if pagination.currentPageNumber < pagination.pageCount %}
-                    <a href="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber + 1})) }}"
-                       class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-card hover:bg-muted transition-colors">
+                    <twig:SFUIToolbox:Generic:Button variant="outline" link="{{ path(route, app.request.query.all()|merge({page: pagination.currentPageNumber + 1})) }}">
                         {{ 'next'|trans }}
                         <twig:ux:icon name="lucide:chevron-right" class="size-4"/>
-                    </a>
+                    </twig:SFUIToolbox:Generic:Button>
                 {% else %}
                     <span class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border bg-muted text-muted-foreground opacity-50 cursor-not-allowed">
                         {{ 'next'|trans }}

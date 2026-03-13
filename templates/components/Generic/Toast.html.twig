@@ -19,7 +19,7 @@
     {{ attributes }}
 >
     <span class="text-sm font-medium">{{ message }}</span>
-    <button type="button" data-action="click->dismiss#dismiss" class="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
-        <twig:ux:icon name="ph:x" class="h-4 w-4"/>
-    </button>
+    <twig:SFUIToolbox:Generic:Button variant="ghost" size="icon-sm" type="button" class="shrink-0 opacity-60 hover:opacity-100" data-action="click->dismiss#dismiss">
+        <twig:ux:icon name="ph:x" class="size-4"/>
+    </twig:SFUIToolbox:Generic:Button>
 </div>

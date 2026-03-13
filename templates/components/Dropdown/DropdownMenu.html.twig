@@ -4,13 +4,9 @@
     data-action="click@window->dropdown#closeOnClickOutside"
 >
     {% block dropdownButton %}
-        <button
-            type="button"
-            class="flex items-center justify-center size-9 rounded-lg border border-border bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-            data-action="click->dropdown#toggle"
-        >
+        <twig:SFUIToolbox:Generic:Button variant="ghost" size="icon" type="button" data-action="click->dropdown#toggle">
             <twig:ux:icon name="fa6-solid:ellipsis" class="size-4"/>
-        </button>
+        </twig:SFUIToolbox:Generic:Button>
     {% endblock %}
 
     <div

@@ -3,14 +3,9 @@
 {%- props title, actions = '' -%}
 <header class="bg-sidebar flex flex-wrap items-center justify-between px-4 sm:px-6 py-2 sm:py-0 sm:h-16 shrink-0 border-b border-sidebar-border z-10 gap-x-3 gap-y-2">
     <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-        <button
-            type="button"
-            class="lg:hidden shrink-0 p-1.5 rounded-md hover:bg-accent transition-colors text-foreground"
-            data-action="click->sidebar#toggle"
-            aria-label="Toggle navigation"
-        >
+        <twig:SFUIToolbox:Generic:Button variant="ghost" size="icon-sm" type="button" class="lg:hidden shrink-0" data-action="click->sidebar#toggle" aria-label="Toggle navigation">
             <twig:ux:icon name="lucide:menu" class="size-5"/>
-        </button>
+        </twig:SFUIToolbox:Generic:Button>
         <h1 class="text-base sm:text-xl font-semibold text-foreground truncate">{{ title }}</h1>
     </div>
     {% if actions is not empty %}
