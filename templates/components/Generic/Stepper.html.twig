@@ -1,0 +1,43 @@
+{# @prop steps array — { stepName: {position, label, is_current_step} } #}
+{# @prop currentPosition int — current step position number #}
+{% props steps, currentPosition = 1 %}
+<div class="flex items-start">
+    {% for stepName, step in steps %}
+        <div class="flex-1 flex flex-col items-center">
+            <div class="flex items-center w-full">
+                {# Left connector #}
+                {% if not loop.first %}
+                    <div class="flex-1 h-0.5 {{ step.position <= currentPosition ? 'bg-emerald-500' : 'bg-border' }}"></div>
+                {% else %}
+                    <div class="flex-1"></div>
+                {% endif %}
+
+                {# Circle #}
+                {% if step.position < currentPosition %}
+                    <div class="size-10 rounded-full flex items-center justify-center bg-emerald-500 text-white shrink-0">
+                        <twig:ux:icon name="lucide:check" class="size-5"/>
+                    </div>
+                {% elseif step.is_current_step %}
+                    <div class="size-10 rounded-full flex items-center justify-center bg-primary text-white font-bold text-sm shrink-0">
+                        {{ step.position }}
+                    </div>
+                {% else %}
+                    <div class="size-10 rounded-full flex items-center justify-center border-2 border-border text-muted-foreground font-semibold text-sm shrink-0">
+                        {{ step.position }}
+                    </div>
+                {% endif %}
+
+                {# Right connector #}
+                {% if not loop.last %}
+                    <div class="flex-1 h-0.5 {{ step.position < currentPosition ? 'bg-emerald-500' : 'bg-border' }}"></div>
+                {% else %}
+                    <div class="flex-1"></div>
+                {% endif %}
+            </div>
+
+            <p class="text-xs font-semibold uppercase tracking-wide mt-2 text-center px-1 {{ step.is_current_step ? 'text-primary' : (step.position < currentPosition ? 'text-emerald-600' : 'text-muted-foreground') }}">
+                {{ step.label }}
+            </p>
+        </div>
+    {% endfor %}
+</div>
