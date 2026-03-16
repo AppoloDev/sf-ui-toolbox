@@ -2,23 +2,28 @@
 {# @prop description Section description (optional) #}
 {# @prop icon Lucide icon name (optional) #}
 {# @prop has_filters Whether to show a filter toggle button alongside the search bar #}
+{# @block header Override the section header (defaults to SectionHeader component) #}
+{# @block before_search Content between header and search bar (e.g. a dropzone form) #}
+{# @block search_hidden_inputs Hidden inputs to inject inside the search form #}
 {# @block filters Filter fields shown in the collapsible panel (only when has_filters=true) #}
 {# @block content The list/grid content #}
 {% props title = '', description = '', icon = '', has_filters = false %}
 <section class="flex-grow min-w-0 space-y-6">
 
-    {% if title %}
-        <twig:SFUIToolbox:Generic:SectionHeader icon="{{ icon }}" title="{{ title }}" description="{{ description }}"/>
-    {% endif %}
+    {% block header %}
+        {% if title %}
+            <twig:SFUIToolbox:Generic:SectionHeader icon="{{ icon }}" title="{{ title }}" description="{{ description }}"/>
+        {% endif %}
+    {% endblock %}
+
+    {% block before_search %}{% endblock %}
 
     {% if has_filters %}
         {# ── SearchBar card with filter toggle ───────────────────── #}
         <div data-controller="filter-panel" class="space-y-2">
             <div class="bg-card rounded-xl p-1.5 flex items-center border border-border gap-1">
                 <form class="flex-1 flex items-center px-2.5 gap-2 min-w-0">
-                    <span class="text-muted-foreground shrink-0">
-                        <twig:ux:icon name="iconoir:search" class="size-4"/>
-                    </span>
+                    {% block search_hidden_inputs %}{% endblock %}
                     <input
                         name="q"
                         value="{{ app.request.query.get('q') }}"
@@ -30,8 +35,8 @@
                     <twig:SFUIToolbox:Generic:Button class="p-0 bg-transparent !text-primary hover:bg-transparent" link="{{ path(app.request.attributes.get('_route'), _routeParams) }}">
                         <twig:ux:icon name="iconoir:xmark"/>
                     </twig:SFUIToolbox:Generic:Button>
-                    <twig:SFUIToolbox:Generic:Button class="py-2" type="submit">
-                        {{ 'filter'|trans }}
+                    <twig:SFUIToolbox:Generic:Button size="icon" type="submit">
+                        <twig:ux:icon name="iconoir:search" class="size-4"/>
                     </twig:SFUIToolbox:Generic:Button>
                 </form>
                 <div class="w-px h-6 bg-border shrink-0"></div>
