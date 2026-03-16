@@ -34,11 +34,11 @@
     '%name%': updated_by ?? _unknown,
 }) %}
 
-<div class="flex items-center -space-x-3">
+<div class="flex items-center -space-x-2">
     {# Creator avatar — z-10 so modifier renders on top #}
     <twig:SFUIToolbox:Generic:Tooltip label="{{ _created_label }}" position="top" class="z-10">
         <twig:block name="content">
-            <div class="size-7 rounded-full border-2 border-background ring-1 ring-border bg-muted text-muted-foreground flex items-center justify-center text-[10px] font-bold">
+            <div class="size-7 rounded-full border border-border ring-2 ring-background bg-muted text-muted-foreground flex items-center justify-center text-[10px] font-bold">
                 {{ _c_initials }}
             </div>
         </twig:block>
@@ -47,7 +47,7 @@
     {# Modifier avatar — z-20 so it overlaps the creator #}
     <twig:SFUIToolbox:Generic:Tooltip label="{{ _updated_label }}" position="top" class="z-20">
         <twig:block name="content">
-            <div class="size-7 rounded-full border-2 border-background ring-1 ring-border bg-muted text-muted-foreground flex items-center justify-center text-[10px] font-bold">
+            <div class="size-7 rounded-full border border-border ring-2 ring-background bg-muted text-muted-foreground flex items-center justify-center text-[10px] font-bold">
                 {{ _u_initials }}
             </div>
         </twig:block>
