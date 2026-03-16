@@ -1,0 +1,55 @@
+{# @prop created_at \DateTimeInterface|null Creation date #}
+{# @prop created_by string|null Full name of creator #}
+{# @prop updated_at \DateTimeInterface|null Last update date #}
+{# @prop updated_by string|null Full name of last modifier #}
+{% props created_at = null, created_by = null, updated_at = null, updated_by = null %}
+
+{# ── Compute initials from a full name string ── #}
+{% set _unknown = 'unknown_author'|trans %}
+
+{% if created_by %}
+    {% set _c_parts = created_by|split(' ')|filter(p => p is not empty) %}
+    {% set _c_initials = (_c_parts|length >= 2)
+        ? (_c_parts[0]|slice(0,1) ~ _c_parts|last|slice(0,1))|upper
+        : _c_parts[0]|slice(0,1)|upper %}
+{% else %}
+    {% set _c_initials = '?' %}
+{% endif %}
+
+{% if updated_by %}
+    {% set _u_parts = updated_by|split(' ')|filter(p => p is not empty) %}
+    {% set _u_initials = (_u_parts|length >= 2)
+        ? (_u_parts[0]|slice(0,1) ~ _u_parts|last|slice(0,1))|upper
+        : _u_parts[0]|slice(0,1)|upper %}
+{% else %}
+    {% set _u_initials = '?' %}
+{% endif %}
+
+{% set _created_label = 'created_on_by'|trans({
+    '%date%': created_at ? created_at|date('d/m/Y') : '—',
+    '%name%': created_by ?? _unknown,
+}) %}
+{% set _updated_label = 'updated_on_by'|trans({
+    '%date%': updated_at ? updated_at|date('d/m/Y') : '—',
+    '%name%': updated_by ?? _unknown,
+}) %}
+
+<div class="flex items-center -space-x-1.5">
+    {# Creator avatar #}
+    <twig:SFUIToolbox:Generic:Tooltip label="{{ _created_label }}" position="top">
+        <twig:block name="content">
+            <div class="size-7 rounded-full border-2 border-background flex items-center justify-center text-[10px] font-bold {{ created_by ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground' }}">
+                {{ _c_initials }}
+            </div>
+        </twig:block>
+    </twig:SFUIToolbox:Generic:Tooltip>
+
+    {# Modifier avatar #}
+    <twig:SFUIToolbox:Generic:Tooltip label="{{ _updated_label }}" position="top">
+        <twig:block name="content">
+            <div class="size-7 rounded-full border-2 border-background flex items-center justify-center text-[10px] font-bold {{ updated_by ? 'bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-400' : 'bg-muted text-muted-foreground' }}">
+                {{ _u_initials }}
+            </div>
+        </twig:block>
+    </twig:SFUIToolbox:Generic:Tooltip>
+</div>
