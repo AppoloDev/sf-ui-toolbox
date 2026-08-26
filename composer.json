@@ -1,7 +1,7 @@
 {
     "name": "appolodev/sf-ui-toolbox",
     "description": "Toolbox UI for Symfony",
-    "version": "1.1.33",
+    "version": "1.2.0",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -18,9 +18,9 @@
         "twig/twig": "^3.0",
         "twig/html-extra": "^3.12",
         "tales-from-a-dev/twig-tailwind-extra": "^1.0",
-        "symfony/ux-twig-component": "^2.9",
+        "symfony/ux-twig-component": "^3.1",
         "symfony/twig-bundle": "^8.0",
-        "symfony/ux-icons": "^2.18"
+        "symfony/ux-icons": "^3.1"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.49",
